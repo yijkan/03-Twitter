@@ -6,8 +6,9 @@
 //  Copyright © 2016 Yijin Kang. All rights reserved.
 //
 
-import Cocoa
+import UIKit
 
-class ProfileViewController: UIViewController {
-
+class ProfileViewController: FeedViewController {
+    var user:User!
+    
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Yijin Kang. All rights reserved.
 //
 
-import Cocoa
+import UIKit
 
-class OtherViewController: UIViewController {
+class OtherViewController: ProfileViewController {
 
 }

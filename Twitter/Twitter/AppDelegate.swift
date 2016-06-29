@@ -7,15 +7,37 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    
 
     var window: UIWindow?
+    
 
+    /*** called when app is opened after authorization from Safari ***/
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        TwitterClient.sharedInstance.handleOpenURL(url)
+        return true
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if User.currentUser != nil { // logged in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("FeedNavCon")
+            window?.rootViewController = vc
+        } 
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(User.userDidLogoutNotif, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateInitialViewController()
+            self.window?.rootViewController = vc
+        }
+        
         return true
     }
 

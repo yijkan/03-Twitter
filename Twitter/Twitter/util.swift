@@ -7,3 +7,6 @@
 //
 
 import Foundation
+import BDBOAuth1Manager
+
+let ext = "mytweet"

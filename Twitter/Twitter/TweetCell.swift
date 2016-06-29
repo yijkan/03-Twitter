@@ -6,8 +6,28 @@
 //  Copyright © 2016 Yijin Kang. All rights reserved.
 //
 
-import Cocoa
+import UIKit
+import AFNetworking
 
 class TweetCell: UITableViewCell {
-
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var tweetLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    
+    var tweet: Tweet! {
+        didSet {
+            let user = tweet.user
+            if let profileURL:NSURL = user?.profileURL {
+                profileImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
+                        self.profileImageView.image = image
+                    }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
+                        print("Error: " + error.localizedDescription)
+                })
+            }
+            authorLabel.text = user?.name
+            tweetLabel.text = tweet.text
+            timestampLabel.text = "TODO" // TODO calculate relative timestamp
+        }
+    }
 }
