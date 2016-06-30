@@ -22,12 +22,31 @@ class TwitterClient: BDBOAuth1SessionManager {
     static let verifyPath = "1.1/account/verify_credentials.json"
     static let homeTimelinePath = "1.1/statuses/home_timeline.json"
     static let userTimelinePath = "1.1/statuses/user_timeline.json"
+    static let updatePath = "1.1/statuses/update.json"
     
     /*** shared instance of the session manager ***/
     static let sharedInstance:TwitterClient = TwitterClient(baseURL: NSURL(string: baseURLString)!, consumerKey: consumerKey, consumerSecret: consumerSecret)
     
     var loginSuccess: (() -> ())?
     var loginFailure: ((NSError!) -> ())?
+    
+    /*** url includes requestToken; fetches accessToken ***/
+    func handleOpenURL(url:NSURL) {
+        let requestToken = BDBOAuth1Credential(queryString: url.query)
+        TwitterClient.sharedInstance.fetchAccessTokenWithPath(TwitterClient.accessTokenPath, method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential!) in
+            self.currentAccount( { (user: User) -> () in
+                User.currentUser = user
+                self.loginSuccess?()
+                }, failure: { (error:NSError) -> () in
+                    self.loginFailure?(error)
+                }
+            )
+            }, failure: { (error:NSError!) in
+                self.loginFailure?(error)
+            }
+            
+        )
+    }
 
     func login(success: () -> () , failure:(NSError!) -> ()) {
         // save these to be called when necessary
@@ -92,21 +111,13 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
-    /*** url includes requestToken; fetches accessToken ***/
-    func handleOpenURL(url:NSURL) {
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-        TwitterClient.sharedInstance.fetchAccessTokenWithPath(TwitterClient.accessTokenPath, method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential!) in
-                self.currentAccount( { (user: User) -> () in
-                    User.currentUser = user
-                    self.loginSuccess?()
-                    }, failure: { (error:NSError) -> () in
-                        self.loginFailure?(error)
-                    }
-                )
-            }, failure: { (error:NSError!) in
-                self.loginFailure?(error)
-            }
- 
+    func tweet(tweet:String!, success: () -> (), failure:(NSError) -> ()) {
+        TwitterClient.sharedInstance.POST(TwitterClient.updatePath, parameters: ["status":tweet], progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+                    success()
+                }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                    failure(error)
+                }
         )
+
     }
 }

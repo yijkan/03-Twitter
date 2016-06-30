@@ -16,25 +16,25 @@ let ext = "mytweet"
 // https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSCalendar_Class/#//apple_ref/occ/instm/NSCalendar/components:fromDate:toDate:options:
 
 extension NSDate {
-    func yearsFrom(_ date: NSDate) -> Int {
+    func yearsFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.Year, fromDate: date, toDate: self, options: []).year ?? 0
     }
-    func monthsFrom(_ date: NSDate) -> Int {
+    func monthsFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.Month, fromDate: date, toDate: self, options: []).month ?? 0
     }
-    func weeksFrom(_ date: NSDate) -> Int {
+    func weeksFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.WeekOfYear, fromDate: date, toDate: self, options: []).weekOfYear ?? 0
     }
-    func daysFrom(_ date: NSDate) -> Int {
+    func daysFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.Day, fromDate: date, toDate: self, options: []).day ?? 0
     }
-    func hoursFrom(_ date: NSDate) -> Int {
+    func hoursFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.Hour, fromDate: date, toDate: self, options: []).hour ?? 0
     }
-    func minutesFrom(_ date: NSDate) -> Int {
+    func minutesFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.Minute, fromDate: date, toDate: self, options: []).minute ?? 0
     }
-    func secondsFrom(_ date: NSDate) -> Int {
+    func secondsFrom(date: NSDate) -> Int {
         return NSCalendar.currentCalendar().components(.Second, fromDate: date, toDate: self, options: []).second ?? 0
     }
     var relativeTime: String {
