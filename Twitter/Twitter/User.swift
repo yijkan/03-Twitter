@@ -7,13 +7,28 @@
 //
 
 import Foundation
+import UIKit
 
 class User: NSObject {
     var dict: NSDictionary
     var name: String?
     var handle: String?
+    var attributedNameAndHandle: NSAttributedString? {
+        get {
+            let nameSub = name ?? ""
+            let handleSub = "@" + (handle ?? "")
+            let attributed = NSMutableAttributedString(string: nameSub + " " + handleSub)
+            attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, nameSub.characters.count))
+            attributed.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16, weight: UIFontWeightSemibold), range: NSMakeRange(0, nameSub.characters.count))
+            attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: NSMakeRange(nameSub.characters.count+1, handleSub.characters.count))
+            return attributed
+        }
+    }
     var desc: String?
     var profileURL: NSURL?
+    var numTweets: Int?
+    var numFollowing: Int?
+    var numFollowers: Int?
     
     init(dictionary: NSDictionary) {
         self.dict = dictionary
@@ -25,6 +40,9 @@ class User: NSObject {
         if let profileURLString = profileURLString {
             profileURL = NSURL(string: profileURLString)
         }
+        numTweets = dictionary["statuses_count"] as? Int
+        numFollowing = dictionary["friends_count"] as? Int
+        numFollowers = dictionary["followers_count"] as? Int
     }
     
     static var _currentUser: User?

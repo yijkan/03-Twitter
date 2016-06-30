@@ -11,12 +11,8 @@ import BDBOAuth1Manager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    
-
     var window: UIWindow?
     
-
     /*** called when app is opened after authorization from Safari ***/
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         TwitterClient.sharedInstance.handleOpenURL(url)
@@ -28,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if User.currentUser != nil { // logged in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewControllerWithIdentifier("FeedNavCon")
+            let vc = storyboard.instantiateViewControllerWithIdentifier("MainTabBar")
             window?.rootViewController = vc
         } 
         
