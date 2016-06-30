@@ -159,26 +159,26 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GcJ-V9-mvP">
-                                <rect key="frame" x="20" y="488" width="56" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GcJ-V9-mvP">
+                                <rect key="frame" x="20" y="488" width="36" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Retweet"/>
+                                <state key="normal" title="Retweet" image="retweet-action"/>
                                 <connections>
                                     <action selector="onRetweet:" destination="ylq-KU-sXp" eventType="touchUpInside" id="GpC-0w-5m5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nOp-Cp-kph">
-                                <rect key="frame" x="133" y="488" width="55" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nOp-Cp-kph">
+                                <rect key="frame" x="142" y="488" width="31" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Favorite"/>
+                                <state key="normal" title="Favorite" image="like-action"/>
                                 <connections>
                                     <action selector="onFavorite:" destination="ylq-KU-sXp" eventType="touchUpInside" id="bhM-WM-jzi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Hr1-b6-udk">
-                                <rect key="frame" x="261" y="488" width="39" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hr1-b6-udk">
+                                <rect key="frame" x="264" y="488" width="36" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Reply"/>
+                                <state key="normal" title="Reply" image="reply-action_0"/>
                                 <connections>
                                     <action selector="onReply:" destination="ylq-KU-sXp" eventType="touchUpInside" id="zs7-pW-98l"/>
                                 </connections>
@@ -188,9 +188,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Tweet" id="89W-gP-et1"/>
                     <connections>
+                        <outlet property="favoriteButton" destination="nOp-Cp-kph" id="Wri-02-mPA"/>
                         <outlet property="handleLabel" destination="FOR-bg-DES" id="SLj-XF-FFW"/>
                         <outlet property="nameLabel" destination="6vV-uU-MMe" id="Ib6-0u-kXK"/>
                         <outlet property="profileImageView" destination="XpQ-zU-XOx" id="Usc-N6-nck"/>
+                        <outlet property="replyButton" destination="Hr1-b6-udk" id="nnL-1w-ToP"/>
+                        <outlet property="retweetButton" destination="GcJ-V9-mvP" id="c8j-Tf-yvK"/>
                         <outlet property="timestampLabel" destination="F0A-2h-kGp" id="hmH-D3-qS7"/>
                         <outlet property="tweetLabel" destination="NDU-Fn-01Y" id="sSR-1c-o1d"/>
                         <segue destination="Xkl-PN-za2" kind="modal" identifier="reply" id="qme-Xp-weY"/>
@@ -607,6 +610,11 @@
             <point key="canvasLocation" x="969" y="1475"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="like-action" width="54" height="72"/>
+        <image name="reply-action_0" width="65" height="72"/>
+        <image name="retweet-action" width="75" height="72"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="mqs-mk-Pv2"/>
         <segue reference="qme-Xp-weY"/>

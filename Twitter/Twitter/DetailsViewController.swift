@@ -17,6 +17,17 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
 
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var replyButton: UIButton!
+    
+    let retweetedFalseImage = UIImage(named: "retweet-action")
+    let favoritedFalseImage = UIImage(named: "like-action")
+    let repliedFalseImage = UIImage(named: "reply-action_0")
+    let retweetedTrueImage = UIImage(named: "retweet-action-on")
+    let favoritedTrueImage = UIImage(named: "like-action-on")
+    let repliedTrueImage = UIImage(named: "reply-action-pressed_0")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,18 +47,41 @@ class DetailsViewController: UIViewController {
         timestampLabel.text = tweet.absoluteTimestamp
     }
     
+    // ??? WTF the image won't get set...
+    override func viewWillAppear(animated: Bool) {
+        if tweet.liked {
+            print("tweet was liked")
+            favoriteButton.imageView!.image = favoritedTrueImage
+        } else {
+            favoriteButton.imageView!.image = favoritedFalseImage
+        }
+        if tweet.retweeted {
+            print("tweet was retweeted")
+            retweetButton.imageView!.image = retweetedTrueImage
+        } else {
+            retweetButton.imageView!.image = retweetedFalseImage
+        }
+    }
+    
     @IBAction func onRetweet(sender: UIButton) {
         TwitterClient.sharedInstance.retweet(tweet.id, success: {
-                // TODO indication of RT
-                print("RT")
+                self.tweet.retweeted = true
+                self.retweetButton.imageView!.image = self.retweetedTrueImage
             }, failure: failureClosure
         )
     }
     
     @IBAction func onFavorite(sender: UIButton) {
-        TwitterClient.sharedInstance.favorite(tweet.id, success: {
-                // TODO indication of fav
-                print("fav")
+        let tweetID:String!
+        if let originalDict = tweet.originalDict {
+            let original = Tweet(dictionary: originalDict)
+            tweetID = original.id
+        } else {
+            tweetID = tweet.id
+        }
+        TwitterClient.sharedInstance.favorite(tweetID, success: {
+                self.tweet.liked = true
+                self.favoriteButton.imageView!.image = self.favoritedTrueImage
             }, failure: failureClosure
         )
 
@@ -70,7 +104,6 @@ class DetailsViewController: UIViewController {
 }
 extension DetailsViewController : TweetDelegate {
     func postedTweet(tweetText: String) {
-        // TODO indication of reply
-        // turn the replied button on?
+        self.replyButton.imageView!.image = self.repliedTrueImage
     }
 }

@@ -119,7 +119,6 @@ class FeedViewController: UIViewController {
             vc.delegate = self
         }
     }
-    
 }
 
 extension FeedViewController:UITableViewDataSource {

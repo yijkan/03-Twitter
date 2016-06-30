@@ -33,7 +33,11 @@ class Tweet: NSObject {
         }
     }
     var retweets:Int = 0
+    var retweeted:Bool = false
     var likes:Int = 0
+    var liked:Bool = false
+    
+    var originalDict:NSDictionary? = nil
     
     init(tweetText:String) {
         user = User.currentUser
@@ -57,7 +61,11 @@ class Tweet: NSObject {
         }
         
         retweets = (dictionary["retweet_count"] as? Int) ?? 0
+        retweeted = (dictionary["retweeted"] as! Bool) ?? false
         likes = (dictionary["favourites_count"] as? Int) ?? 0
+        liked = (dictionary["favorited"] as! Bool) ?? false
+        
+        originalDict = dictionary["retweeted_status"] as? NSDictionary
     }
     
     class func tweetsFromArray(dictionaries: [NSDictionary]) -> [Tweet] {
