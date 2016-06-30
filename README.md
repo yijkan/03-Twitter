@@ -2,7 +2,7 @@
 
 **MyTweet** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **5** hours spent in total
+Time spent: **6.5** hours spent in total
 
 ## User Stories
 
@@ -15,12 +15,12 @@ The following **required** functionality is completed:
 - [x] User can pull to refresh.
 - [x] User should display the relative timestamp for each tweet "8m", "7h"
 - [ ] Retweeting and favoriting should increment the retweet and favorite count.
-- [ ] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [ ] User can compose a new tweet by tapping on a compose button.
-- [ ] User can tap the profile image in any tweet to see another user's profile
-   - [ ] Contains the user header view: picture and tagline
-   - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-   - [ ] Profile view should include that user's timeline
+- [x] User can tap the profile image in any tweet to see another user's profile
+   - [x] Contains the user header view: picture and tagline
+   - [x] Contains a section with the users basic stats: # tweets, # following, # followers
+   - [x] Profile view should include that user's timeline
 - [x] User can navigate to view their own profile
    - [x] Contains the user header view: picture and tagline
    - [x] Contains a section with the users basic stats: # tweets, # following, # followers

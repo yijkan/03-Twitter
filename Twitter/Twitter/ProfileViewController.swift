@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class ProfileViewController: FeedViewController {
+//    var oldUser:User! !!!
     var user:User!
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -18,12 +20,14 @@ class ProfileViewController: FeedViewController {
     @IBOutlet weak var followingNumLabel: UILabel!
     @IBOutlet weak var followersNumLabel: UILabel!
     
-    override func viewDidLoad() {
-        user = User.currentUser
+    func setUser() {
         
+    }
+    
+    func setViews() {
         if let profileURL = user.profileURL {
             profileImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
-                    self.profileImageView.image = image
+                self.profileImageView.image = image
                 }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
                     print("Error: " + error.localizedDescription)
             })
@@ -34,9 +38,44 @@ class ProfileViewController: FeedViewController {
         tweetsNumLabel.text = "\(user.numTweets ?? 0)"
         followingNumLabel.text = "\(user.numFollowing ?? 0)"
         followersNumLabel.text = "\(user.numFollowers ?? 0)"
-        
-        // load posts
     }
     
+    override func loadTweets(useHUD:Bool) {
+        if useHUD {
+            MBProgressHUD.showHUDAddedTo(self.view, animated:true)
+        }
+        TwitterClient.sharedInstance.userTimeline(user.handle, success: { (tweets:[Tweet]) in
+                self.tweets = tweets
+                self.tweetsTableView.reloadData()
+            }, failure: { (error:NSError) in
+                print("Error: " + error.localizedDescription)
+            }, completion: { () in
+                if useHUD {
+                    MBProgressHUD.hideHUDForView(self.view, animated:true)
+                }
+                self.refreshControl.endRefreshing()
+            }
+        )
+    }
+    
+    override func viewDidLoad() {
+//        oldUser = user !!!
+        setUser()
+        setViews()
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+//        if user != oldUser { !!!
+//            oldUser = user
+//            setUser()
+//            setViews()
+//            super.viewDidLoad()
+//        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+    }
     
 }

@@ -21,6 +21,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     static let verifyPath = "1.1/account/verify_credentials.json"
     static let homeTimelinePath = "1.1/statuses/home_timeline.json"
+    static let userTimelinePath = "1.1/statuses/user_timeline.json"
     
     /*** shared instance of the session manager ***/
     static let sharedInstance:TwitterClient = TwitterClient(baseURL: NSURL(string: baseURLString)!, consumerKey: consumerKey, consumerSecret: consumerSecret)
@@ -71,6 +72,24 @@ class TwitterClient: BDBOAuth1SessionManager {
                 completion()
             }
         )
+    }
+    
+    func userTimeline(screenName: String?, success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
+        if let screenName = screenName {
+            TwitterClient.sharedInstance.GET(TwitterClient.userTimelinePath, parameters: ["screen_name":screenName], progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+                let dictionaries = response as! [NSDictionary]
+                let tweets = Tweet.tweetsFromArray(dictionaries)
+                success(tweets)
+                completion()
+                }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                    failure(error)
+                    completion()
+                }
+            )
+        } else {
+            print("Error: no screenname provided")
+            completion()
+        }
     }
     
     /*** url includes requestToken; fetches accessToken ***/

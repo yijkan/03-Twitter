@@ -35,11 +35,9 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tweetsTableView.dataSource = self
         tweetsTableView.delegate = self
         
-        /*** pull to refresh ***/
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
         tweetsTableView.insertSubview(refreshControl, atIndex: 0)
@@ -54,6 +52,15 @@ class FeedViewController: UIViewController {
     
     @IBAction func onLogout(sender: UIBarButtonItem) {
         TwitterClient.sharedInstance.logout()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "tweetDetails" {
+            if let cell = sender as? TweetCell {
+                let vc = segue.destinationViewController as! DetailsViewController
+                vc.tweet = cell.tweet
+            }
+        }
     }
     
 }
@@ -75,7 +82,6 @@ extension FeedViewController:UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        // TODO segue to details view
     }
 }
 

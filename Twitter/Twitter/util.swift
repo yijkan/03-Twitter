@@ -40,17 +40,16 @@ extension NSDate {
     var relativeTime: String {
         let now = NSDate()
         if now.yearsFrom(self)   > 0 {
-            return now.yearsFrom(self).description  + " year"  + { return now.yearsFrom(self)   > 1 ? "s" : "" }() + " ago"
+            return now.yearsFrom(self).description  + "y"
         }
         if now.monthsFrom(self)  > 0 {
-            return now.monthsFrom(self).description + " month" + { return now.monthsFrom(self)  > 1 ? "s" : "" }() + " ago"
+            return now.monthsFrom(self).description + "mo"
         }
         if now.weeksFrom(self)   > 0 {
-            return now.weeksFrom(self).description  + " week"  + { return now.weeksFrom(self)   > 1 ? "s" : "" }() + " ago"
+            return now.weeksFrom(self).description  + "w"
         }
         if now.daysFrom(self)    > 0 {
-            if now.daysFrom(self) == 1 { return "Yesterday" }
-            return now.daysFrom(self).description + " days ago"
+            return now.daysFrom(self).description + "d"
         }
         if now.hoursFrom(self)   > 0 {
             return "\(now.hoursFrom(self))h"

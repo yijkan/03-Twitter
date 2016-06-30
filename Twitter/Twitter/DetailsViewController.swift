@@ -9,5 +9,46 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
+    var tweet:Tweet!
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var handleLabel: UILabel!
+    @IBOutlet weak var tweetLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let user = tweet.user
+        if let profileURL = user?.profileURL {
+            profileImageView.setImageWithURLRequest(NSURLRequest(URL:profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
+                    self.profileImageView.image = image
+                }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
+                    print("Error: " + error.localizedDescription)
+            })
+        }
+        nameLabel.text = user?.name
+        if let handle = user?.handle {
+            handleLabel.text = "@" + handle
+        }
+        tweetLabel.text = tweet.text
+        timestampLabel.text = tweet.absoluteTimestamp
+    }
+    
+    @IBAction func onRetweet(sender: UIButton) {
+    }
+    
+    @IBAction func onFavorite(sender: UIButton) {
+    }
+    
+    @IBAction func onReply(sender: UIButton) {
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "profile" {
+            let vc = segue.destinationViewController as! OtherViewController
+            vc.user = tweet.user
+        }
+    }
 }

@@ -9,13 +9,30 @@
 import Foundation
 
 class Tweet: NSObject {
+    static var sourceDateFormat = "EEE MMM d HH:mm:ss Z y"
+    static var dateFormat = "EEE MMM d y HH:mm"
+    
     var user:User?
     var text:String?
     var createdAt:NSDate?
+    var relativeTimestamp:String? {
+        get {
+            return createdAt?.relativeTime
+        }
+    }
+    var absoluteTimestamp:String? {
+        get {
+            if let createdAt = createdAt {
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = Tweet.dateFormat
+                return formatter.stringFromDate(createdAt)
+            } else {
+                return nil
+            }
+        }
+    }
     var retweets:Int = 0
     var likes:Int = 0
-    
-    static var dateFormat = "EEE MMM d HH:mm:ss Z y"
     
     init(dictionary: NSDictionary) {
         if let userData = dictionary["user"] as? NSDictionary {
@@ -24,7 +41,7 @@ class Tweet: NSObject {
         text = dictionary["text"] as? String
         let createdAtString = dictionary["created_at"] as? String
         let formatter = NSDateFormatter()
-        formatter.dateFormat = Tweet.dateFormat
+        formatter.dateFormat = Tweet.sourceDateFormat
         if let createdAtString = createdAtString {
             createdAt = formatter.dateFromString(createdAtString)
         }

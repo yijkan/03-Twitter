@@ -29,8 +29,7 @@ class TweetCell: UITableViewCell {
             authorLabel.attributedText = user?.attributedNameAndHandle
             tweetLabel.text = tweet.text
             
-            let createdAt = tweet.createdAt
-            timestampLabel.text = createdAt?.relativeTime 
+            timestampLabel.text = tweet.relativeTimestamp
         }
     }
 }
