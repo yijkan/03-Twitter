@@ -26,7 +26,10 @@ class TwitterClient: BDBOAuth1SessionManager {
     static let updatePath = "1.1/statuses/update.json"
     static let retweetPathPrefix = "1.1/statuses/retweet/"
     static let retweetPathSuffix = ".json"
+    static let unretweetPathPrefix = "1.1/statuses/unretweet/"
+    static let unretweetPathSuffix = ".json"
     static let favoritePath = "1.1/favorites/create.json"
+    static let unfavoritePath = "1.1/favorites/destroy.json"
     
     /*** shared instance of the session manager ***/
     static let sharedInstance:TwitterClient = TwitterClient(baseURL: NSURL(string: baseURLString)!, consumerKey: consumerKey, consumerSecret: consumerSecret)
@@ -130,7 +133,6 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     
     func retweet(id:String!, success: () -> (), failure:(NSError) -> ()) {
-        print(id)
         TwitterClient.sharedInstance.POST(TwitterClient.retweetPathPrefix + id + TwitterClient.retweetPathSuffix, parameters: nil, progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
                 success()
             }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
@@ -139,9 +141,26 @@ class TwitterClient: BDBOAuth1SessionManager {
         )
     }
     
+    func unretweet(id:String!, success: () -> (), failure:(NSError) -> ()) {
+        TwitterClient.sharedInstance.POST(TwitterClient.unretweetPathPrefix + id + TwitterClient.unretweetPathSuffix, parameters: nil, progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+            success()
+            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                failure(error)
+            }
+        )
+    }
+    
     func favorite(id:String!, success: () -> (), failure:(NSError) -> ()) {
-        print(id)
         TwitterClient.sharedInstance.POST(TwitterClient.favoritePath, parameters: ["id":id], progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+                success()
+            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                failure(error)
+            }
+        )
+    }
+    
+    func unfavorite(id:String!, success: () -> (), failure:(NSError) -> ()) {
+        TwitterClient.sharedInstance.POST(TwitterClient.unfavoritePath, parameters: ["id":id], progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
                 success()
             }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
                 failure(error)

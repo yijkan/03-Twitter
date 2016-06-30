@@ -69,11 +69,19 @@ class DetailsViewController: UIViewController {
     }
     
     @IBAction func onRetweet(sender: UIButton) {
-        TwitterClient.sharedInstance.retweet(tweet.id, success: {
+        if tweet.retweeted {
+            TwitterClient.sharedInstance.unretweet(tweet.id, success: {
+                self.tweet.retweeted = false
+                self.retweetButton.setImage(self.retweetedFalseImage, forState: .Normal)
+                }, failure: failureClosure
+            )
+        } else {
+            TwitterClient.sharedInstance.retweet(tweet.id, success: {
                 self.tweet.retweeted = true
                 self.retweetButton.setImage(self.retweetedTrueImage, forState: .Normal)
-            }, failure: failureClosure
-        )
+                }, failure: failureClosure
+            )
+        }
     }
     
     @IBAction func onFavorite(sender: UIButton) {
@@ -84,11 +92,19 @@ class DetailsViewController: UIViewController {
         } else {
             tweetID = tweet.id
         }
-        TwitterClient.sharedInstance.favorite(tweetID, success: {
-                self.tweet.liked = true
-                self.favoriteButton.setImage(self.favoritedTrueImage, forState: .Normal)
-            }, failure: failureClosure
-        )
+        if tweet.liked {
+            TwitterClient.sharedInstance.unfavorite(tweetID, success: {
+                self.tweet.liked = false
+                self.favoriteButton.setImage(self.favoritedFalseImage, forState: .Normal)
+                }, failure: failureClosure
+            )
+        } else {
+            TwitterClient.sharedInstance.favorite(tweetID, success: {
+                    self.tweet.liked = true
+                    self.favoriteButton.setImage(self.favoritedTrueImage, forState: .Normal)
+                }, failure: failureClosure
+            )
+        }
 
     }
     
