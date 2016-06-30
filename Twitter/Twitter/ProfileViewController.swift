@@ -10,8 +10,8 @@ import UIKit
 import MBProgressHUD
 
 class ProfileViewController: FeedViewController {
-    var user:User!
     
+    var user:User!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
@@ -28,7 +28,7 @@ class ProfileViewController: FeedViewController {
             profileImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
                 self.profileImageView.image = image
                 }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
-                    print("Error: " + error.localizedDescription)
+                    failureClosure(error)
             })
         }
         
@@ -39,37 +39,13 @@ class ProfileViewController: FeedViewController {
         followersNumLabel.text = "\(user.numFollowers ?? 0)"
     }
     
-    override func loadTweets(useHUD:Bool) {
-        if useHUD {
-            MBProgressHUD.showHUDAddedTo(self.view, animated:true)
-        }
-        TwitterClient.sharedInstance.userTimeline(user.handle, success: { (tweets:[Tweet]) in
-                self.tweets = tweets
-                self.tweetsTableView.reloadData()
-            }, failure: { (error:NSError) in
-                print("Error: " + error.localizedDescription)
-            }, completion: { () in
-                if useHUD {
-                    MBProgressHUD.hideHUDForView(self.view, animated:true)
-                }
-                self.refreshControl.endRefreshing()
-            }
-        )
-    }
-    
-    func reloadProfile(useHUD:Bool) {
+    override func reload(ofUser:User?, useHUD:Bool) {
         user.reload({ (user) in
             self.user = user
             self.setViews()
-            self.loadTweets(useHUD)
-            }, failure: { (error) in
-                print("Error: " + error.localizedDescription)
-            }
+            super.reload(user, useHUD: useHUD)
+            }, failure: failureClosure
         )
-    }
-    
-    override func refreshControlAction(refreshControl: UIRefreshControl) {
-        reloadProfile(false)
     }
     
     override func viewDidLoad() {
@@ -78,16 +54,9 @@ class ProfileViewController: FeedViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        if (userChanged) {
-            reloadProfile(true)
-            userChanged = false
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        super.prepareForSegue(segue, sender: sender)
+//    }
     
     override func postedTweet(tweetText: String) {
         super.postedTweet(tweetText)

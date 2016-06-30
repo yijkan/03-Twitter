@@ -10,10 +10,11 @@ import Foundation
 import BDBOAuth1Manager
 
 let ext = "mytweet"
+let failureClosure = { (error:NSError!) in print("Error: " + error.localizedDescription) }
 
 // the following is by referencing:
 // http://stackoverflow.com/questions/27310883/swift-ios-doesrelativedateformatting-have-different-values-besides-today-and
-// https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSCalendar_Class/#//apple_ref/occ/instm/NSCalendar/components:fromDate:toDate:options:
+// https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSCalendar_Class/
 
 extension NSDate {
     func yearsFrom(date: NSDate) -> Int {

@@ -36,16 +36,12 @@ class ComposeViewController: UIViewController {
         if let replyTo = replyTo {
             TwitterClient.sharedInstance.reply(replyTo, tweetText: tweet, success: {
                     self.dismissViewControllerAnimated(true, completion: {self.delegate.postedTweet(tweet)})
-                }, failure: {
-                    (error:NSError) in print("Error:" + error.localizedDescription)
-                }
+                }, failure: failureClosure
             )
         } else {
             TwitterClient.sharedInstance.tweet(tweet, success: {
                     self.dismissViewControllerAnimated(true, completion: {self.delegate.postedTweet(tweet)})
-                }, failure: {
-                    (error:NSError) in print("Error:" + error.localizedDescription)
-                }
+                }, failure: failureClosure
             )
         }
     }

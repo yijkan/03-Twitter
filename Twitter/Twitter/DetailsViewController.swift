@@ -25,7 +25,7 @@ class DetailsViewController: UIViewController {
             profileImageView.setImageWithURLRequest(NSURLRequest(URL:profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
                     self.profileImageView.image = image
                 }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
-                    print("Error: " + error.localizedDescription)
+                    failureClosure(error)
             })
         }
         nameLabel.text = user?.name
@@ -40,9 +40,7 @@ class DetailsViewController: UIViewController {
         TwitterClient.sharedInstance.retweet(tweet.id, success: {
                 // TODO indication of RT
                 print("RT")
-            }, failure: {(error) in
-                print("Error: " + error.localizedDescription)
-            }
+            }, failure: failureClosure
         )
     }
     
@@ -50,9 +48,7 @@ class DetailsViewController: UIViewController {
         TwitterClient.sharedInstance.favorite(tweet.id, success: {
                 // TODO indication of fav
                 print("fav")
-            }, failure: {(error) in
-                print("Error: " + error.localizedDescription)
-            }
+            }, failure: failureClosure
         )
 
     }

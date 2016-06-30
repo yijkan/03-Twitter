@@ -2,7 +2,7 @@
 
 **MyTweet** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **10** hours spent in total (2:08PM)
+Time spent: **10.5** hours spent in total (2:46PM)
 
 ## User Stories
 
@@ -27,7 +27,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
+- [x] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [ ] When composing, you should have a countdown in the upper right for the tweet limit.
 - [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.

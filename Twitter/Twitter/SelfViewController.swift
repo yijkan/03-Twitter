@@ -13,8 +13,8 @@ class SelfViewController: ProfileViewController {
         user = User.currentUser
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        super.prepareForSegue(segue, sender: sender)
+//    }
 }
 

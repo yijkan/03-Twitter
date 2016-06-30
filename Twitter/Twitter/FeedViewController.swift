@@ -13,23 +13,33 @@ class FeedViewController: UIViewController {
     var userChanged:Bool = false
     var tweetReuseID = "tweet"
     var tweets: [Tweet]!
+    var loadCount = 0 // how many infinite scroll loads we've done
+    var isLoadingMore:Bool = false
+    var loadingMoreView:InfiniteScrollActivityView? // the view when infinite scroll loading
     @IBOutlet weak var tweetsTableView: UITableView!
     var refreshControl:UIRefreshControl!
     
-    func loadTweets(useHUD:Bool) {
+    func reload(ofUser:User?, useHUD:Bool) {
         if useHUD {
             MBProgressHUD.showHUDAddedTo(self.view, animated:true)
         }
-        TwitterClient.sharedInstance.homeTimeline({ (tweets:[Tweet]) in
+        let screenName:String?
+        if ofUser == nil || ofUser!.handle == nil {
+            screenName = nil
+        } else {
+            screenName = ofUser!.handle!
+        }
+        
+        TwitterClient.sharedInstance.timeline(loadCount, screenName: screenName, success: { (tweets:[Tweet]) in
             self.tweets = tweets
             self.tweetsTableView.reloadData()
-            }, failure: { (error:NSError) in
-                print("Error: " + error.localizedDescription)
-            }, completion: { () in
+            }, failure: failureClosure, completion: { () in
                 if useHUD {
                     MBProgressHUD.hideHUDForView(self.view, animated:true)
                 }
                 self.refreshControl.endRefreshing()
+                self.isLoadingMore = false
+                self.loadingMoreView!.stopAnimating()
             }
         )
     }
@@ -43,7 +53,17 @@ class FeedViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
         tweetsTableView.insertSubview(refreshControl, atIndex: 0)
         
-        loadTweets(true)
+        /***** for infinite scroll *****/
+        let frame = CGRectMake(0, tweetsTableView.contentSize.height, tweetsTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        tweetsTableView.addSubview(loadingMoreView!)
+        
+        var insets = tweetsTableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tweetsTableView.contentInset = insets
+        
+        reload(nil, useHUD: true)
         
         NSNotificationCenter.defaultCenter().addObserverForName(User.userDidLogoutNotif, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification) in
             self.userChanged = true
@@ -52,14 +72,36 @@ class FeedViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         if (userChanged) {
-            loadTweets(true)
+            reload(nil, useHUD: true)
             userChanged = false
         }
     }
     
     /*** pull to refresh ***/
     func refreshControlAction(refreshControl: UIRefreshControl) {
-        loadTweets(false)
+        loadCount = 1
+        reload(nil, useHUD: false)
+    }
+    
+    /***** For Infinite Scroll *****/
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isLoadingMore) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tweetsTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tweetsTableView.bounds.size.height
+            
+            if (scrollView.contentOffset.y > scrollOffsetThreshold && tweetsTableView.dragging) {
+                isLoadingMore = true
+                
+                let frame = CGRectMake(0, tweetsTableView.contentSize.height, tweetsTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                loadCount += 1
+                reload(nil, useHUD: false)
+            }
+            
+        }
     }
     
     @IBAction func onLogout(sender: UIBarButtonItem) {

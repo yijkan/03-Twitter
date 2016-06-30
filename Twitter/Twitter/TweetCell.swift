@@ -23,12 +23,11 @@ class TweetCell: UITableViewCell {
                 profileImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
                         self.profileImageView.image = image
                     }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
-                        print("Error: " + error.localizedDescription)
+                        failureClosure(error)
                 })
             }
             authorLabel.attributedText = user?.attributedNameAndHandle
             tweetLabel.text = tweet.text
-            
             timestampLabel.text = tweet.relativeTimestamp
         }
     }

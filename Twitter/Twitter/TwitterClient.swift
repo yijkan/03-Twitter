@@ -34,24 +34,6 @@ class TwitterClient: BDBOAuth1SessionManager {
     var loginSuccess: (() -> ())?
     var loginFailure: ((NSError!) -> ())?
     
-    /*** url includes requestToken; fetches accessToken ***/
-    func handleOpenURL(url:NSURL) {
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-        TwitterClient.sharedInstance.fetchAccessTokenWithPath(TwitterClient.accessTokenPath, method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential!) in
-            self.currentAccount( { (user: User) -> () in
-                User.currentUser = user
-                self.loginSuccess?()
-                }, failure: { (error:NSError) -> () in
-                    self.loginFailure?(error)
-                }
-            )
-            }, failure: { (error:NSError!) in
-                self.loginFailure?(error)
-            }
-            
-        )
-    }
-
     func login(success: () -> () , failure:(NSError!) -> ()) {
         // save these to be called when necessary
         loginSuccess = success
@@ -59,14 +41,30 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         TwitterClient.sharedInstance.deauthorize()
         TwitterClient.sharedInstance.fetchRequestTokenWithPath(TwitterClient.requestTokenPath, method: "GET", callbackURL: NSURL(string:ext + "://oauth"), scope: nil, success: { (requestToken:BDBOAuth1Credential!) in
-                // open the url in Safari
-                let url = NSURL(string: TwitterClient.authorizeURL + requestToken.token)!
-                UIApplication.sharedApplication().openURL(url)
+            // open the url in Safari
+            let url = NSURL(string: TwitterClient.authorizeURL + requestToken.token)!
+            UIApplication.sharedApplication().openURL(url)
             }, failure: { (error:NSError!) in
                 self.loginFailure!(error)
-            })
+        })
     }
     
+    /*** url includes requestToken; fetches accessToken ***/
+    func handleOpenURL(url:NSURL) {
+        let requestToken = BDBOAuth1Credential(queryString: url.query)
+        TwitterClient.sharedInstance.fetchAccessTokenWithPath(TwitterClient.accessTokenPath, method: "POST", requestToken: requestToken, success: { (accessToken:BDBOAuth1Credential!) in
+                self.currentAccount( { (user: User) -> () in
+                    User.currentUser = user
+                    self.loginSuccess?()
+                }, failure: { (error:NSError) -> () in
+                    self.loginFailure?(error)
+                })
+            }, failure: { (error:NSError!) in
+                self.loginFailure?(error)
+            }
+        )
+    }
+
     func logout() {
         User.currentUser = nil
         deauthorize()
@@ -93,34 +91,22 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
-        TwitterClient.sharedInstance.GET(TwitterClient.homeTimelinePath, parameters: nil, progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
-                let dictionaries = response as! [NSDictionary]
-                let tweets = Tweet.tweetsFromArray(dictionaries)
-                success(tweets)
-                completion()
-            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
-                failure(error)
-                completion()
-            }
-        )
-    }
-    
-    func userTimeline(screenName: String?, success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
-        if let screenName = screenName {
-            TwitterClient.sharedInstance.GET(TwitterClient.userTimelinePath, parameters: ["screen_name":screenName], progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
-                let dictionaries = response as! [NSDictionary]
-                let tweets = Tweet.tweetsFromArray(dictionaries)
-                success(tweets)
-                completion()
-                }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
-                    failure(error)
-                    completion()
-                }
-            )
-        } else {
-            print("Error: no screenname provided")
+    func timeline(loadCount:Int, screenName: String?, success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
+        let fullSuccess = { (task:NSURLSessionDataTask, response:AnyObject?) in
+            let dictionaries = response as! [NSDictionary]
+            let tweets = Tweet.tweetsFromArray(dictionaries)
+            success(tweets)
             completion()
+        }
+        let fullFailure = { (task:NSURLSessionDataTask?, error:NSError) in
+            failure(error)
+            completion()
+        }
+        
+        if let screenName = screenName {
+            TwitterClient.sharedInstance.GET(TwitterClient.userTimelinePath, parameters: ["screen_name":screenName, "count":loadCount * 20], progress: nil, success: fullSuccess, failure: fullFailure)
+        } else {
+            TwitterClient.sharedInstance.GET(TwitterClient.homeTimelinePath, parameters: ["count":loadCount * 20], progress: nil, success: fullSuccess, failure: fullFailure)
         }
     }
     

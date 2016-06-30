@@ -25,9 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let currentUser = User.currentUser {
             currentUser.reload({ (user) in
                     User.currentUser = user
-                }, failure: { (error) in
-                    print("Error: " + error.localizedDescription)
-                }
+                }, failure: failureClosure
             )
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainTabBar")
