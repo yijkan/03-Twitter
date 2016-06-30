@@ -22,7 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        if User.currentUser != nil { // logged in
+        if let currentUser = User.currentUser {
+            currentUser.reload({ (user) in
+                    User.currentUser = user
+                }, failure: { (error) in
+                    print("Error: " + error.localizedDescription)
+                }
+            )
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("MainTabBar")
             window?.rootViewController = vc
