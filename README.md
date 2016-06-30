@@ -42,7 +42,7 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
+1. I didn't realize how much polymorphism Swift and iOS support, because I was able to use my FeedViewController as the parent of my ProfileViewControllers so I wouldn't have to rewrite too much code for loading tweets
 2.
 
 ## Video Walkthrough
@@ -65,7 +65,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [Yijin Kang]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

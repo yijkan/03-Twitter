@@ -41,9 +41,9 @@ class ProfileViewController: FeedViewController {
     
     override func reload(ofUser:User?, useHUD:Bool) {
         user.reload({ (user) in
-            self.user = user
-            self.setViews()
-            super.reload(user, useHUD: useHUD)
+                self.user = user
+                self.setViews()
+                super.reload(user, useHUD: useHUD)
             }, failure: failureClosure
         )
     }

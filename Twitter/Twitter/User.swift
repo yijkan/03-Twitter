@@ -47,9 +47,9 @@ class User: NSObject {
         handle = dictionary["screen_name"] as? String
         desc = dictionary["description"] as? String
         
-        let profileURLString = dictionary["profile_image_url_https"] as? String
-        if let profileURLString = profileURLString {
-            profileURL = NSURL(string: profileURLString)
+        if let profileURLString = dictionary["profile_image_url_https"] as? String {
+            let modifiedProfileURLString = profileURLString.stringByReplacingOccurrencesOfString("_normal", withString: "_bigger")
+            profileURL = NSURL(string: modifiedProfileURLString)
         }
         numTweets = dictionary["statuses_count"] as? Int
         numFollowing = dictionary["friends_count"] as? Int
