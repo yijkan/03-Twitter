@@ -31,7 +31,7 @@ class User: NSObject {
     var numFollowers: Int?
     
     init(dictionary: NSDictionary) {
-        self.dict = dictionary
+        dict = dictionary
         name = dictionary["name"] as? String
         handle = dictionary["screen_name"] as? String
         desc = dictionary["description"] as? String
@@ -43,6 +43,10 @@ class User: NSObject {
         numTweets = dictionary["statuses_count"] as? Int
         numFollowing = dictionary["friends_count"] as? Int
         numFollowers = dictionary["followers_count"] as? Int
+    }
+    
+    func reload(success: ((User) -> ()), failure: ((NSError) -> ())) {
+        TwitterClient.sharedInstance.loadUserData(handle, success: success, failure: failure)
     }
     
     static var _currentUser: User?

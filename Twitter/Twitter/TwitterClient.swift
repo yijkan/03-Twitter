@@ -20,9 +20,13 @@ class TwitterClient: BDBOAuth1SessionManager {
     static let accessTokenPath = "oauth/access_token"
     
     static let verifyPath = "1.1/account/verify_credentials.json"
+    static let showUserPath = "1.1/users/show.json"
     static let homeTimelinePath = "1.1/statuses/home_timeline.json"
     static let userTimelinePath = "1.1/statuses/user_timeline.json"
     static let updatePath = "1.1/statuses/update.json"
+    static let retweetPathPrefix = "1.1/statuses/retweet/"
+    static let retweetPathSuffix = ".json"
+    static let favoritePath = "1.1/favorites/create.json"
     
     /*** shared instance of the session manager ***/
     static let sharedInstance:TwitterClient = TwitterClient(baseURL: NSURL(string: baseURLString)!, consumerKey: consumerKey, consumerSecret: consumerSecret)
@@ -80,6 +84,15 @@ class TwitterClient: BDBOAuth1SessionManager {
         )
     }
     
+    func loadUserData(screen_name: String!, success: (User) -> (), failure: (NSError) -> ()) {
+        TwitterClient.sharedInstance.GET(TwitterClient.showUserPath, parameters: ["screen_name":screen_name], progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+                let user = User(dictionary: response as! NSDictionary)
+                success(user)
+            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                failure(error)
+        })
+    }
+    
     func homeTimeline(success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
         TwitterClient.sharedInstance.GET(TwitterClient.homeTimelinePath, parameters: nil, progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
                 let dictionaries = response as! [NSDictionary]
@@ -118,6 +131,25 @@ class TwitterClient: BDBOAuth1SessionManager {
                     failure(error)
                 }
         )
-
+    }
+    
+    func retweet(id:String!, success: () -> (), failure:(NSError) -> ()) {
+        print(id)
+        TwitterClient.sharedInstance.POST(TwitterClient.retweetPathPrefix + id + TwitterClient.retweetPathSuffix, parameters: nil, progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+                success()
+            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                failure(error)
+            }
+        )
+    }
+    
+    func favorite(id:String!, success: () -> (), failure:(NSError) -> ()) {
+        print(id)
+        TwitterClient.sharedInstance.POST(TwitterClient.favoritePath, parameters: ["id":id], progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+                success()
+            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                failure(error)
+            }
+        )
     }
 }

@@ -12,6 +12,7 @@ class Tweet: NSObject {
     static var sourceDateFormat = "EEE MMM d HH:mm:ss Z y"
     static var dateFormat = "EEE MMM d y HH:mm"
     
+    var id:String?
     var user:User?
     var text:String?
     var createdAt:NSDate?
@@ -35,6 +36,7 @@ class Tweet: NSObject {
     var likes:Int = 0
     
     init(dictionary: NSDictionary) {
+        id = dictionary["id_str"] as? String
         if let userData = dictionary["user"] as? NSDictionary {
             user = User(dictionary: userData)
         }

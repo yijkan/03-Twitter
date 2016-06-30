@@ -10,6 +10,7 @@ import UIKit
 import MBProgressHUD
 
 class FeedViewController: UIViewController {
+    var userChanged:Bool = false
     var tweetReuseID = "tweet"
     var tweets: [Tweet]!
     @IBOutlet weak var tweetsTableView: UITableView!
@@ -43,6 +44,17 @@ class FeedViewController: UIViewController {
         tweetsTableView.insertSubview(refreshControl, atIndex: 0)
         
         loadTweets(true)
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(User.userDidLogoutNotif, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification) in
+            self.userChanged = true
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if (userChanged) {
+            loadTweets(true)
+            userChanged = false
+        }
     }
     
     /*** pull to refresh ***/
