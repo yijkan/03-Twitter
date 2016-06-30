@@ -133,6 +133,16 @@ class TwitterClient: BDBOAuth1SessionManager {
         )
     }
     
+    func reply(replyTo: Tweet, tweetText:String!, success: () -> (), failure:(NSError) -> ()) {
+        TwitterClient.sharedInstance.POST(TwitterClient.updatePath, parameters: ["status":tweetText, "in_reply_to_status_id":replyTo.id], progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
+            success()
+            }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
+                failure(error)
+            }
+        )
+    }
+
+    
     func retweet(id:String!, success: () -> (), failure:(NSError) -> ()) {
         print(id)
         TwitterClient.sharedInstance.POST(TwitterClient.retweetPathPrefix + id + TwitterClient.retweetPathSuffix, parameters: nil, progress:nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in

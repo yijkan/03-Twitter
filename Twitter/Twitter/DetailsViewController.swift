@@ -58,12 +58,23 @@ class DetailsViewController: UIViewController {
     }
     
     @IBAction func onReply(sender: UIButton) {
+        performSegueWithIdentifier("reply", sender: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "profile" {
             let vc = segue.destinationViewController as! OtherViewController
             vc.user = tweet.user
+        } else if segue.identifier == "reply" {
+            let vc = segue.destinationViewController as! ComposeViewController
+            vc.delegate = self
+            vc.replyTo = tweet
         }
+    }
+}
+extension DetailsViewController : TweetDelegate {
+    func postedTweet(tweetText: String) {
+        // TODO indication of reply
+        // turn the replied button on?
     }
 }

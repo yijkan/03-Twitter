@@ -193,6 +193,7 @@
                         <outlet property="profileImageView" destination="XpQ-zU-XOx" id="Usc-N6-nck"/>
                         <outlet property="timestampLabel" destination="F0A-2h-kGp" id="hmH-D3-qS7"/>
                         <outlet property="tweetLabel" destination="NDU-Fn-01Y" id="sSR-1c-o1d"/>
+                        <segue destination="Xkl-PN-za2" kind="modal" identifier="reply" id="qme-Xp-weY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YuF-qn-0BW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -608,6 +609,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="mqs-mk-Pv2"/>
-        <segue reference="ZkS-jS-TIe"/>
+        <segue reference="qme-Xp-weY"/>
     </inferredMetricsTieBreakers>
 </document>

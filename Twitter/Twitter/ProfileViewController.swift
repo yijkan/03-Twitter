@@ -9,8 +9,6 @@
 import UIKit
 import MBProgressHUD
 
-// TODO reloading profile information
-
 class ProfileViewController: FeedViewController {
     var user:User!
     
@@ -59,21 +57,32 @@ class ProfileViewController: FeedViewController {
         )
     }
     
-    override func refreshControlAction(refreshControl: UIRefreshControl) {
+    func reloadProfile(useHUD:Bool) {
         user.reload({ (user) in
-                self.user = user
-                self.setViews()
-                self.loadTweets(false)
+            self.user = user
+            self.setViews()
+            self.loadTweets(useHUD)
             }, failure: { (error) in
                 print("Error: " + error.localizedDescription)
             }
         )
     }
     
+    override func refreshControlAction(refreshControl: UIRefreshControl) {
+        reloadProfile(false)
+    }
+    
     override func viewDidLoad() {
         setUser()
         setViews()
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if (userChanged) {
+            reloadProfile(true)
+            userChanged = false
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
