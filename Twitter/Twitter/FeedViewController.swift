@@ -7,11 +7,31 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class FeedViewController: UIViewController {
     var tweetReuseID = "tweet"
     var tweets: [Tweet]!
     @IBOutlet weak var tweetsTableView: UITableView!
+    var refreshControl:UIRefreshControl!
+    
+    func loadTweets(useHUD:Bool) {
+        if useHUD {
+            MBProgressHUD.showHUDAddedTo(self.view, animated:true)
+        }
+        TwitterClient.sharedInstance.homeTimeline({ (tweets:[Tweet]) in
+            self.tweets = tweets
+            self.tweetsTableView.reloadData()
+            }, failure: { (error:NSError) in
+                print("Error: " + error.localizedDescription)
+            }, completion: { () in
+                if useHUD {
+                    MBProgressHUD.hideHUDForView(self.view, animated:true)
+                }
+                self.refreshControl.endRefreshing()
+            }
+        )
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,19 +39,22 @@ class FeedViewController: UIViewController {
         tweetsTableView.dataSource = self
         tweetsTableView.delegate = self
         
-        TwitterClient.sharedInstance.homeTimeline({ (tweets:[Tweet]) in
-                self.tweets = tweets
-                self.tweetsTableView.reloadData()
-            }, failure: { (error:NSError) in
-                print("Error: " + error.localizedDescription)
-            }
-        )
+        /*** pull to refresh ***/
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        tweetsTableView.insertSubview(refreshControl, atIndex: 0)
+        
+        loadTweets(true)
+    }
+    
+    /*** pull to refresh ***/
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        loadTweets(false)
     }
     
     @IBAction func onLogout(sender: UIBarButtonItem) {
         TwitterClient.sharedInstance.logout()
     }
-    
     
 }
 
@@ -48,6 +71,11 @@ extension FeedViewController:UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("tweet") as! TweetCell
         cell.tweet = tweets[indexPath.row]
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        // TODO segue to details view
     }
 }
 

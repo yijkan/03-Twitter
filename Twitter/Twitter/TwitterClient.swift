@@ -25,7 +25,6 @@ class TwitterClient: BDBOAuth1SessionManager {
     /*** shared instance of the session manager ***/
     static let sharedInstance:TwitterClient = TwitterClient(baseURL: NSURL(string: baseURLString)!, consumerKey: consumerKey, consumerSecret: consumerSecret)
     
-    
     var loginSuccess: (() -> ())?
     var loginFailure: ((NSError!) -> ())?
 
@@ -61,13 +60,15 @@ class TwitterClient: BDBOAuth1SessionManager {
         )
     }
     
-    func homeTimeline(success: ([Tweet]) -> (), failure:(NSError) -> ()) {
+    func homeTimeline(success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
         TwitterClient.sharedInstance.GET(TwitterClient.homeTimelinePath, parameters: nil, progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
                 let dictionaries = response as! [NSDictionary]
                 let tweets = Tweet.tweetsFromArray(dictionaries)
                 success(tweets)
+                completion()
             }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
                 failure(error)
+                completion()
             }
         )
     }

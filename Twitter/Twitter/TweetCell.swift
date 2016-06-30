@@ -18,6 +18,7 @@ class TweetCell: UITableViewCell {
     var tweet: Tweet! {
         didSet {
             let user = tweet.user
+            
             if let profileURL:NSURL = user?.profileURL {
                 profileImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
                         self.profileImageView.image = image
@@ -25,9 +26,17 @@ class TweetCell: UITableViewCell {
                         print("Error: " + error.localizedDescription)
                 })
             }
-            authorLabel.text = user?.name
+            let name = (user?.name)!
+            let handle = (user?.handle)!
+            let author = NSMutableAttributedString(string: name + " @" + handle)
+            author.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, name.characters.count))
+            author.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16, weight: UIFontWeightSemibold), range: NSMakeRange(0, name.characters.count))
+            author.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: NSMakeRange(name.characters.count+1, handle.characters.count+1))
+            authorLabel.attributedText = author
             tweetLabel.text = tweet.text
-            timestampLabel.text = "TODO" // TODO calculate relative timestamp
+            
+            let createdAt = tweet.createdAt
+            timestampLabel.text = createdAt?.relativeTime 
         }
     }
 }
