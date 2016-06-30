@@ -28,6 +28,8 @@ class DetailsViewController: UIViewController {
     let favoritedTrueImage = UIImage(named: "like-action-on")
     let repliedTrueImage = UIImage(named: "reply-action-pressed_0")
     
+    let blueImage = UIImage(named:"blue")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,23 +52,26 @@ class DetailsViewController: UIViewController {
     // ??? WTF the image won't get set...
     override func viewWillAppear(animated: Bool) {
         if tweet.liked {
-            print("tweet was liked")
-            favoriteButton.imageView!.image = favoritedTrueImage
+            favoriteButton.setImage(favoritedTrueImage, forState: .Normal)
         } else {
-            favoriteButton.imageView!.image = favoritedFalseImage
+            favoriteButton.setImage(favoritedFalseImage, forState: .Normal)
         }
         if tweet.retweeted {
-            print("tweet was retweeted")
-            retweetButton.imageView!.image = retweetedTrueImage
+            retweetButton.setImage(retweetedTrueImage, forState: .Normal)
         } else {
-            retweetButton.imageView!.image = retweetedFalseImage
+            retweetButton.setImage(retweetedFalseImage, forState: .Normal)
         }
+        replyButton.setImage(repliedFalseImage, forState: .Normal)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
     }
     
     @IBAction func onRetweet(sender: UIButton) {
         TwitterClient.sharedInstance.retweet(tweet.id, success: {
                 self.tweet.retweeted = true
-                self.retweetButton.imageView!.image = self.retweetedTrueImage
+                self.retweetButton.setImage(self.retweetedTrueImage, forState: .Normal)
             }, failure: failureClosure
         )
     }
@@ -81,7 +86,7 @@ class DetailsViewController: UIViewController {
         }
         TwitterClient.sharedInstance.favorite(tweetID, success: {
                 self.tweet.liked = true
-                self.favoriteButton.imageView!.image = self.favoritedTrueImage
+                self.favoriteButton.setImage(self.favoritedTrueImage, forState: .Normal)
             }, failure: failureClosure
         )
 
