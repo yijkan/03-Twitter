@@ -34,7 +34,7 @@ class ProfileViewController: FeedViewController {
             })
         }
         
-        nameLabel.attributedText = user.attributedNameAndHandle
+        nameLabel.attributedText = user.largeAttributedNameAndHandle
         descLabel.text = user.desc
         tweetsNumLabel.text = "\(user.numTweets ?? 0)"
         followingNumLabel.text = "\(user.numFollowing ?? 0)"
@@ -80,6 +80,11 @@ class ProfileViewController: FeedViewController {
         super.prepareForSegue(segue, sender: sender)
     }
     
-    
+    override func postedTweet(tweetText: String) {
+        super.postedTweet(tweetText)
+        
+        let numTweets:Int = Int(tweetsNumLabel.text!)!
+        tweetsNumLabel.text = "\(numTweets+1)"
+    }
     
 }

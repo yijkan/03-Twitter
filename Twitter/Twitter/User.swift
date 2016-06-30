@@ -24,6 +24,17 @@ class User: NSObject {
             return attributed
         }
     }
+    var largeAttributedNameAndHandle: NSAttributedString? {
+        get {
+            let nameSub = name ?? ""
+            let handleSub = "@" + (handle ?? "")
+            let attributed = NSMutableAttributedString(string: nameSub + "\n" + handleSub)
+            attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, nameSub.characters.count))
+            attributed.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold), range: NSMakeRange(0, nameSub.characters.count))
+            attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: NSMakeRange(nameSub.characters.count+1, handleSub.characters.count))
+            return attributed
+        }
+    }
     var desc: String?
     var profileURL: NSURL?
     var numTweets: Int?

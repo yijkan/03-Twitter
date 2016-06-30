@@ -35,6 +35,14 @@ class Tweet: NSObject {
     var retweets:Int = 0
     var likes:Int = 0
     
+    init(tweetText:String) {
+        user = User.currentUser
+        text = tweetText
+        let date = NSDate()
+        let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: date)
+        createdAt = NSCalendar.currentCalendar().dateFromComponents(components)
+    }
+    
     init(dictionary: NSDictionary) {
         id = dictionary["id_str"] as? String
         if let userData = dictionary["user"] as? NSDictionary {

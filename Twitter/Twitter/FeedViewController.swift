@@ -72,6 +72,9 @@ class FeedViewController: UIViewController {
                 let vc = segue.destinationViewController as! DetailsViewController
                 vc.tweet = cell.tweet
             }
+        } else if segue.identifier == "New" {
+            let vc = segue.destinationViewController as! ComposeViewController
+            vc.delegate = self
         }
     }
     
@@ -99,4 +102,11 @@ extension FeedViewController:UITableViewDataSource {
 
 extension FeedViewController:UITableViewDelegate {
     
+}
+
+extension FeedViewController : TweetDelegate {
+    func postedTweet(tweetText: String) {
+        tweets.insert(Tweet.init(tweetText: tweetText), atIndex: 0)
+        tweetsTableView.reloadData()
+    }
 }
