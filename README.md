@@ -2,7 +2,7 @@
 
 **MyTweet** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **14.5** hours spent in total (7:03PM)
+Time spent: **15** hours spent in total (7:03PM)
 
 ## User Stories
 

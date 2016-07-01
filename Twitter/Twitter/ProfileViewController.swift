@@ -12,46 +12,33 @@ import MBProgressHUD
 class ProfileViewController: FeedViewController {
     
     var user:User!
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descLabel: UILabel!
-    @IBOutlet weak var tweetsNumLabel: UILabel!
-    @IBOutlet weak var followingNumLabel: UILabel!
-    @IBOutlet weak var followersNumLabel: UILabel!
-    
-    func setUser() {
-        
-    }
-    
-    func setViews() {
-        if let profileURL = user.profileURL {
-            profileImageView.setImageWithURLRequest(NSURLRequest(URL: profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
-                self.profileImageView.image = image
-                }, failure: { (request:NSURLRequest, response:NSHTTPURLResponse?, error:NSError) in
-                    failureClosure(error)
-            })
-        }
-        
-        nameLabel.attributedText = user.largeAttributedNameAndHandle
-        descLabel.text = user.desc
-        tweetsNumLabel.text = "\(user.numTweets ?? 0)"
-        followingNumLabel.text = "\(user.numFollowing ?? 0)"
-        followersNumLabel.text = "\(user.numFollowers ?? 0)"
-    }
     
     override func reload(ofUser:User?, useHUD:Bool) {
         user.reload({ (user) in
                 self.user = user
-                self.setViews()
                 super.reload(user, useHUD: useHUD)
             }, failure: failureClosure
         )
     }
     
     override func viewDidLoad() {
-        setUser()
-        setViews()
         super.viewDidLoad()
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return super.tableView(tableView, numberOfRowsInSection: section) + 1
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("profile") as! ProfileCell
+            cell.user = user
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("tweet") as! TweetCell
+            cell.tweet = tweets[indexPath.row - 1]
+            return cell
+        }
     }
     
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -59,10 +46,9 @@ class ProfileViewController: FeedViewController {
 //    }
     
     override func postedTweet(tweetText: String) {
-        super.postedTweet(tweetText)
-        
-        let numTweets:Int = Int(tweetsNumLabel.text!)!
-        tweetsNumLabel.text = "\(numTweets+1)"
+        tweets.insert(Tweet.init(tweetText: tweetText), atIndex: 1)
+        user.numTweets! += 1
+        tweetsTableView.reloadData()
     }
     
 }

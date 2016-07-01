@@ -9,8 +9,9 @@
 import UIKit
 
 class SelfViewController: ProfileViewController {
-    override func setUser() {
+    override func viewDidLoad() {
         user = User.currentUser
+        super.viewDidLoad()
     }
     
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

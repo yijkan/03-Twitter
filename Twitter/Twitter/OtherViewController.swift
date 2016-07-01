@@ -9,9 +9,5 @@
 import UIKit
 
 class OtherViewController: ProfileViewController {
-    override func setUser() {
-        if user == nil {
-            print("user should be set...")
-        }
-    }
+
 }

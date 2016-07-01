@@ -31,8 +31,8 @@ class FeedViewController: UIViewController {
         }
         
         TwitterClient.sharedInstance.timeline(loadCount, screenName: screenName, success: { (tweets:[Tweet]) in
-            self.tweets = tweets
-            self.tweetsTableView.reloadData()
+                self.tweets = tweets
+                self.tweetsTableView.reloadData()
             }, failure: failureClosure, completion: { () in
                 if useHUD {
                     MBProgressHUD.hideHUDForView(self.view, animated:true)
