@@ -20,5 +20,6 @@ class WebViewController: UIViewController {
     
     override func viewDidLoad() {
         webView.loadRequest(request)
+        self.navigationController?.hidesBarsOnSwipe = true
     }
 }

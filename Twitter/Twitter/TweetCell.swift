@@ -31,16 +31,17 @@ class TweetCell: UITableViewCell {
                         failureClosure(error)
                 })
             }
+//            authorLabel.font = labelFont(16)
             authorLabel.attributedText = user?.attributedNameAndHandle
-            // !!!
-//            tweetLabel.attributedText = tweet.attributedText
-//            tweetLabel.text = tweet.text
             
             timestampLabel.text = tweet.relativeTimestamp
+            timestampLabel.font = labelFont(12)
             
             tweetLabel.delegate = self
+            tweetLabel.font = textFont(14)
             tweetLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
             tweetLabel.setText(tweet.text)
+
         }
     }
     

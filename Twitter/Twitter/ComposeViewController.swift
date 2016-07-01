@@ -12,16 +12,32 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
 
     var delegate: TweetDelegate!
     var replyTo: Tweet? = nil
+    
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var tweetingAsLabel: UILabel!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
+    @IBOutlet weak var charsRemainingLabel: UILabel!
+    @IBOutlet weak var tweetButton: UIButton!
+    
     @IBOutlet weak var charCountBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var charsBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var buttonBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cancelButton.titleLabel!.font = labelFont(16)
+        tweetingAsLabel.font = labelFont(16)
+        
+        userLabel.font = labelFont(16)
         userLabel.text = User.currentUser?.name
+        
+        charCountLabel.font = labelFont(14)
+        charsRemainingLabel.font = labelFont(14)
+        
+        tweetTextView.font = textFont(16)
         tweetTextView.layer.cornerRadius = 5
 //        tweetTextView.layer.borderColor = UIColor.blackColor()
         tweetTextView.layer.borderWidth = 1

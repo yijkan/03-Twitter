@@ -50,21 +50,24 @@ class DetailsViewController: UIViewController {
                     failureClosure(error)
             })
         }
+        nameLabel.font = boldFont(18)
         nameLabel.text = user?.name
+        handleLabel.font = labelFont(18)
         if let handle = user?.handle {
             handleLabel.text = "@" + handle
         }
-        // !!!
-//        tweetTextView.text = tweet.text
-//        tweetLabel.text = tweet.text
-//        tweetLabel.attributedText = tweet.attributedText
+
+        tweetLabel.font = textFont(16)
         tweetLabel.delegate = self
         tweetLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
         tweetLabel.setText(tweet.text)
         
+        timestampLabel.font = labelFont(14)
         timestampLabel.text = tweet.absoluteTimestamp
         
+        retweetsNum.font = labelFont(14)
         retweetsNum.text = "\(tweet.retweets)"
+        likesNum.font = labelFont(14)
         likesNum.text = "\(tweet.likes)"
     }
     

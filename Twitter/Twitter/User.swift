@@ -18,9 +18,12 @@ class User: NSObject {
             let nameSub = name ?? ""
             let handleSub = "@" + (handle ?? "")
             let attributed = NSMutableAttributedString(string: nameSub + " " + handleSub)
+            // make name black & bold
             attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, nameSub.characters.count))
-            attributed.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16, weight: UIFontWeightSemibold), range: NSMakeRange(0, nameSub.characters.count))
+            attributed.addAttribute(NSFontAttributeName, value: boldFont(16), range: NSMakeRange(0, nameSub.characters.count))
+            // make handle gray & regular
             attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: NSMakeRange(nameSub.characters.count+1, handleSub.characters.count))
+            attributed.addAttribute(NSFontAttributeName, value: labelFont(16), range: NSMakeRange(nameSub.characters.count+1, handleSub.characters.count))
             return attributed
         }
     }
@@ -30,8 +33,9 @@ class User: NSObject {
             let handleSub = "@" + (handle ?? "")
             let attributed = NSMutableAttributedString(string: nameSub + "\n" + handleSub)
             attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, nameSub.characters.count))
-            attributed.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold), range: NSMakeRange(0, nameSub.characters.count))
+            attributed.addAttribute(NSFontAttributeName, value: boldFont(20), range: NSMakeRange(0, nameSub.characters.count))
             attributed.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: NSMakeRange(nameSub.characters.count+1, handleSub.characters.count))
+            attributed.addAttribute(NSFontAttributeName, value: labelFont(18), range: NSMakeRange(nameSub.characters.count+1, handleSub.characters.count))
             return attributed
         }
     }

@@ -10,10 +10,13 @@ import UIKit
 import BDBOAuth1Manager
 
 class LoginViewController: UIViewController {
+    @IBOutlet weak var loginButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        loginButton.titleLabel?.font = labelFont(20)
     }
 
     override func didReceiveMemoryWarning() {

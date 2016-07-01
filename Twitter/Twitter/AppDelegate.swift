@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
         }
         
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: boldFont(18)]
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: labelFont(16)], forState: UIControlState.Normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: labelFont(10)], forState: UIControlState.Normal)
+        
         return true
     }
 
