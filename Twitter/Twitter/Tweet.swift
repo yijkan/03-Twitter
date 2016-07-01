@@ -15,6 +15,7 @@ class Tweet: NSObject {
     var id:String?
     var user:User?
     var text:String?
+    var urls:[Url]?
     var createdAt:NSDate?
     var relativeTimestamp:String? {
         get {
@@ -42,6 +43,7 @@ class Tweet: NSObject {
     init(tweetText:String) {
         user = User.currentUser
         text = tweetText
+        urls = []
         let date = NSDate()
         let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: date)
         createdAt = NSCalendar.currentCalendar().dateFromComponents(components)
@@ -53,6 +55,11 @@ class Tweet: NSObject {
             user = User(dictionary: userData)
         }
         text = dictionary["text"] as? String
+        if let entities = dictionary["entities"] as? NSDictionary {
+            if let urls = entities["urls"] as? [NSDictionary] {
+                self.urls = Url.dicts2URLs(urls)
+            }
+        }
         let createdAtString = dictionary["created_at"] as? String
         let formatter = NSDateFormatter()
         formatter.dateFormat = Tweet.sourceDateFormat

@@ -12,6 +12,51 @@ import BDBOAuth1Manager
 let ext = "mytweet"
 let failureClosure = { (error:NSError!) in print("Error: " + error.localizedDescription) }
 
+/*
+func extractHttpURLs(text:String) -> [NSDictionary] {
+    if let rangeOfStart = text.rangeOfString("http://") {
+        let URLStart = String(text.characters.suffixFrom(rangeOfStart.startIndex))
+        if let rangeOfEnd = URLStart.rangeOfString(" ") {
+            var URL = String(URLStart.characters.prefixUpTo(rangeOfEnd.startIndex))
+            var remaining = String(URLStart.characters.suffixFrom(rangeOfEnd.startIndex))
+            
+            if URL.hasSuffix(".") {
+                URL = String(URL.characters.prefixUpTo(URL.startIndex.advancedBy(URL.characters.count-1)))
+                remaining = "." + remaining
+            }
+            
+            print(URL)
+            print(remaining)
+            
+            
+        } else {
+            var URL = URLStart
+            
+        }
+    }
+    return []
+}
+
+func extractHttpsURLs(text:String) -> [NSDictionary] {
+    return []
+}
+
+func extractURLs(text:String) -> [NSDictionary] {
+//    return extractHttpURLs(text) + extractHttpsURLs(text)
+    
+    var urls: [NSDictionary] = []
+    let detector = try! NSDataDetector(types:NSTextCheckingType.Link.rawValue)
+    let matches = detector.matchesInString(text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+    for match in matches {
+        var url: NSDictionary
+        url["indices"] = [match.range.location, match.range.location+match.range.length]
+        url["url"] // what's in the tweet
+        url["display_url"] // excludes http
+        url["expanded_url"] // includes http
+    }
+}
+*/
+
 // the following is by referencing:
 // http://stackoverflow.com/questions/27310883/swift-ios-doesrelativedateformatting-have-different-values-besides-today-and
 // https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSCalendar_Class/
