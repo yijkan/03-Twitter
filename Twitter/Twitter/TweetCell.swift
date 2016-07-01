@@ -34,7 +34,9 @@ class TweetCell: UITableViewCell {
                 })
             }
             authorLabel.attributedText = user?.attributedNameAndHandle
-                    tweetLabel.text = tweet.text // !!!
+            // !!!
+            tweetLabel.attributedText = tweet.attributedText
+//            tweetLabel.text = tweet.text
 //            tweetLabel.setText(tweet.attributedText)
             timestampLabel.text = tweet.relativeTimestamp
         }
