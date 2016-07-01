@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class DetailsViewController: UIViewController {
     var tweet:Tweet!
@@ -15,7 +16,9 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
 //    @IBOutlet weak var tweetLabel: UILabel! 
-    @IBOutlet weak var tweetTextView: UITextView!
+//    @IBOutlet weak var tweetTextView: UITextView!
+    @IBOutlet weak var tweetLabel: TTTAttributedLabel!
+    
     @IBOutlet weak var timestampLabel: UILabel!
 
     @IBOutlet weak var retweetButton: UIButton!
@@ -24,6 +27,8 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var retweetsNum: UILabel!
     @IBOutlet weak var likesNum: UILabel!
+    
+    var delegate: WebViewDelegate!
     
     let retweetedFalseImage = UIImage(named: "retweet-action")
     let favoritedFalseImage = UIImage(named: "like-action")
@@ -50,9 +55,13 @@ class DetailsViewController: UIViewController {
             handleLabel.text = "@" + handle
         }
         // !!!
-        tweetTextView.text = tweet.text
+//        tweetTextView.text = tweet.text
 //        tweetLabel.text = tweet.text
 //        tweetLabel.attributedText = tweet.attributedText
+        tweetLabel.delegate = self
+        tweetLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        tweetLabel.setText(tweet.text)
+        
         timestampLabel.text = tweet.absoluteTimestamp
         
         retweetsNum.text = "\(tweet.retweets)"
@@ -148,6 +157,13 @@ class DetailsViewController: UIViewController {
         }
     }
 }
+
+extension DetailsViewController: TTTAttributedLabelDelegate {
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        delegate.openLink(url)
+    }
+}
+
 extension DetailsViewController : TweetDelegate {
     func postedTweet(tweetText: String) {
         self.replyButton.imageView!.image = self.repliedTrueImage

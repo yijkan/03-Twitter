@@ -38,6 +38,7 @@ class ProfileViewController: FeedViewController {
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("tweet") as! TweetCell
             cell.tweet = tweets[indexPath.row - 1]
+            cell.delegate = self
             return cell
         }
     }

@@ -13,14 +13,12 @@ import AFNetworking
 class TweetCell: UITableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
-//    @IBOutlet weak var tweetLabel: TTTAttributedLabel! // !!!
-    @IBOutlet weak var tweetLabel: UILabel!
+    @IBOutlet weak var tweetLabel: TTTAttributedLabel!
+    // !!!
+//    @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     
-    // !!!
-//    func viewDidLoad() {
-//        tweetLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
-//    }
+    var delegate: WebViewDelegate!
     
     var tweet: Tweet! {
         didSet {
@@ -35,10 +33,25 @@ class TweetCell: UITableViewCell {
             }
             authorLabel.attributedText = user?.attributedNameAndHandle
             // !!!
-            tweetLabel.attributedText = tweet.attributedText
+//            tweetLabel.attributedText = tweet.attributedText
 //            tweetLabel.text = tweet.text
-//            tweetLabel.setText(tweet.attributedText)
+            
             timestampLabel.text = tweet.relativeTimestamp
+            
+            tweetLabel.delegate = self
+            tweetLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+            tweetLabel.setText(tweet.text)
         }
     }
+    
+}
+
+extension TweetCell: TTTAttributedLabelDelegate {
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        delegate.openLink(url)
+    }
+}
+
+protocol WebViewDelegate {
+    func openLink(url: NSURL)
 }

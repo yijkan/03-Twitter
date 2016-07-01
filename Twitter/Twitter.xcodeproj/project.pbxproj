@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		210EB99BFC9E936844DF83F1 /* Pods_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 825CA1EEB82C308D8894FA99 /* Pods_Twitter.framework */; };
+		891FA4991D26EC870041203E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FA4981D26EC870041203E /* WebViewController.swift */; };
 		89202C9A1D24212500EEDF1F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89202C991D24212500EEDF1F /* LoginViewController.swift */; };
 		89202C9C1D2430E900EEDF1F /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89202C9B1D2430E900EEDF1F /* util.swift */; };
 		89202C9E1D24406000EEDF1F /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89202C9D1D24406000EEDF1F /* FeedViewController.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		825CA1EEB82C308D8894FA99 /* Pods_Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		891FA4981D26EC870041203E /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		89202C991D24212500EEDF1F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		89202C9B1D2430E900EEDF1F /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
 		89202C9D1D24406000EEDF1F /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				89202CA61D24415D00EEDF1F /* ProfileViewController.swift */,
 				89202CA81D2441D200EEDF1F /* SelfViewController.swift */,
 				89202CAA1D24423F00EEDF1F /* OtherViewController.swift */,
+				891FA4981D26EC870041203E /* WebViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				89202CB71D25C51E00EEDF1F /* InfiniteScrollActivityView.swift in Sources */,
 				89202C9E1D24406000EEDF1F /* FeedViewController.swift in Sources */,
 				89202CA71D24415D00EEDF1F /* ProfileViewController.swift in Sources */,
+				891FA4991D26EC870041203E /* WebViewController.swift in Sources */,
 				89C6F7281D23BD7E0079FA19 /* AppDelegate.swift in Sources */,
 				8935816E1D262FA200F49EDA /* ProfileCell.swift in Sources */,
 				89202CAB1D24423F00EEDF1F /* OtherViewController.swift in Sources */,

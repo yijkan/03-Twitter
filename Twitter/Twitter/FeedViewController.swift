@@ -115,11 +115,15 @@ class FeedViewController: UIViewController {
         if segue.identifier == "tweetDetails" {
             if let cell = sender as? TweetCell {
                 let vc = segue.destinationViewController as! DetailsViewController
+                vc.delegate = self
                 vc.tweet = cell.tweet
             }
         } else if segue.identifier == "New" {
             let vc = segue.destinationViewController as! ComposeViewController
             vc.delegate = self
+        } else if segue.identifier == "web" {
+            let vc = segue.destinationViewController as! WebViewController
+            vc.url = sender as! NSURL
         }
     }
 }
@@ -136,6 +140,7 @@ extension FeedViewController:UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tweet") as! TweetCell
         cell.tweet = tweets[indexPath.row]
+        cell.delegate = self
         return cell
     }
     
@@ -152,5 +157,12 @@ extension FeedViewController : TweetDelegate {
     func postedTweet(tweetText: String) {
         tweets.insert(Tweet.init(tweetText: tweetText), atIndex: 0)
         tweetsTableView.reloadData()
+    }
+}
+
+extension FeedViewController: WebViewDelegate {
+    func openLink(url: NSURL) {
+        print("opening \(url)")
+        performSegueWithIdentifier("web", sender: url)
     }
 }
