@@ -14,7 +14,6 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var handleLabel: UILabel!
 //    @IBOutlet weak var tweetLabel: UILabel! 
 //    @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var tweetLabel: TTTAttributedLabel!
@@ -41,8 +40,8 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let user = tweet.user
+        
         if let profileURL = user?.profileURL {
             profileImageView.setImageWithURLRequest(NSURLRequest(URL:profileURL), placeholderImage: nil, success: { (request:NSURLRequest, response:NSHTTPURLResponse?, image:UIImage) in
                     self.profileImageView.image = image
@@ -50,12 +49,9 @@ class DetailsViewController: UIViewController {
                     failureClosure(error)
             })
         }
-        nameLabel.font = boldFont(18)
-        nameLabel.text = user?.name
-        handleLabel.font = labelFont(18)
-        if let handle = user?.handle {
-            handleLabel.text = "@" + handle
-        }
+        
+        nameLabel.attributedText = user!.largeAttributedNameAndHandle
+        print("\(user!.largeAttributedNameAndHandle?.string)")
 
         tweetLabel.font = textFont(16)
         tweetLabel.delegate = self
