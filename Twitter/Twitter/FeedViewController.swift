@@ -49,6 +49,9 @@ class FeedViewController: UIViewController {
         tweetsTableView.dataSource = self
         tweetsTableView.delegate = self
         
+        tweetsTableView.estimatedRowHeight = 200
+        tweetsTableView.rowHeight = UITableViewAutomaticDimension
+        
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
         tweetsTableView.insertSubview(refreshControl, atIndex: 0)

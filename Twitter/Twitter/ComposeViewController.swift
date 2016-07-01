@@ -15,6 +15,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
+    @IBOutlet weak var charCountBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var charsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
 //        tweetTextView.layer.borderColor = UIColor.blackColor()
         tweetTextView.layer.borderWidth = 1
         tweetTextView.delegate = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
         
         if let replyTo = replyTo {
             tweetTextView.text = "@\(replyTo.user!.handle!) "
@@ -34,10 +40,34 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onCancel(sender: AnyObject) {
+        view.endEditing(true)
         dismissViewControllerAnimated(true, completion: nil)
+    }
+ 
+    func keyboardWillShow(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        let keyboardFrame = userInfo![UIKeyboardFrameEndUserInfoKey]?.CGRectValue()
+        let keyboardHeight = keyboardFrame?.size.height
+        
+        charCountBottomConstraint.constant = keyboardHeight! + 8
+        charsBottomConstraint.constant = keyboardHeight! + 8
+        buttonBottomConstraint.constant = keyboardHeight! + 8
+        view.layoutIfNeeded()
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        charCountBottomConstraint.constant = 8
+        charsBottomConstraint.constant = 8
+        buttonBottomConstraint.constant = 8
+        view.layoutIfNeeded()
+    }
+    
+    @IBAction func onTap(sender: AnyObject) {
+        view.endEditing(true)
     }
     
     @IBAction func onTweet(sender: AnyObject) {
+        view.endEditing(true)
         let tweet = tweetTextView.text
         if tweet.characters.count > 140 {
             // TODO tweet is too long?
