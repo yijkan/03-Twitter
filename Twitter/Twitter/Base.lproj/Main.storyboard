@@ -143,8 +143,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="logoutButton" destination="Ab3-8y-dsA" id="bpS-SM-lJI"/>
-                        <outlet property="newButton" destination="Xfh-hW-KI5" id="5S0-dK-Jax"/>
                         <outlet property="tweetsTableView" destination="1Jt-bD-dGs" id="j5o-Wi-kfr"/>
                         <segue destination="E8k-Xx-h37" kind="push" identifier="web" id="Mfr-VE-peQ"/>
                     </connections>
@@ -769,8 +767,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="logoutButton" destination="A37-Ou-SRB" id="KWp-ys-c5c"/>
-                        <outlet property="newButton" destination="sAB-fu-nyg" id="QaU-83-gnA"/>
                         <outlet property="tweetsTableView" destination="oVi-QA-DzQ" id="9xN-tE-zRF"/>
                         <segue destination="E8k-Xx-h37" kind="push" identifier="web" id="uKG-Z2-vNK"/>
                     </connections>
@@ -978,7 +974,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cWt-Z5-HUN"/>
+        <segue reference="qme-Xp-weY"/>
         <segue reference="l7j-6N-04P"/>
-        <segue reference="ciR-z0-WOv"/>
     </inferredMetricsTieBreakers>
 </document>

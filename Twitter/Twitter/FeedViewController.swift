@@ -10,9 +10,6 @@ import UIKit
 import MBProgressHUD
 
 class FeedViewController: UIViewController {
-    @IBOutlet weak var logoutButton: UIBarButtonItem!
-    @IBOutlet weak var newButton: UIBarButtonItem!
-    
     var userChanged:Bool = false
     var tweetReuseID = "tweet"
     var tweets: [Tweet]!
@@ -49,9 +46,6 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        logoutButton.setTitleTextAttributes([NSFontAttributeName : labelFont(16)], forState: .Normal)
-        newButton.setTitleTextAttributes([NSFontAttributeName : labelFont(16)], forState: .Normal)
-        
         tweetsTableView.dataSource = self
         tweetsTableView.delegate = self
         
