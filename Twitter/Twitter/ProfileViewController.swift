@@ -46,9 +46,8 @@ class ProfileViewController: FeedViewController {
 //    }
     
     override func postedTweet(tweetText: String) {
-        tweets.insert(Tweet.init(tweetText: tweetText), atIndex: 1)
         user.numTweets! += 1
-        tweetsTableView.reloadData()
+        super.postedTweet(tweetText)
     }
     
 }

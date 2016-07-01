@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Tweet: NSObject {
     static var sourceDateFormat = "EEE MMM d HH:mm:ss Z y"
@@ -16,6 +17,25 @@ class Tweet: NSObject {
     var user:User?
     var text:String?
     var urls:[Url]?
+    // !!!
+    var attributedText:NSMutableAttributedString? {
+        get {
+            if text == nil {
+                return nil
+            }
+            let attributed = NSMutableAttributedString(string: text!)
+            if urls == nil {
+                return attributed
+            }
+            for url in urls! {
+                if url.expandedURL != nil && url.indices != nil {
+                    attributed.addAttribute(NSLinkAttributeName, value: url.expandedURL!, range: NSMakeRange(url.indices!.0, url.indices!.1 - url.indices!.0)) // !!! this doesn't actually make it clickable
+                }
+            }
+            return attributed
+        }
+    }
+    
     var createdAt:NSDate?
     var relativeTimestamp:String? {
         get {

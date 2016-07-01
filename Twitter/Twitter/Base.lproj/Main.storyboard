@@ -113,7 +113,7 @@
                                             <outlet property="authorLabel" destination="vY0-y4-A4h" id="kvI-X4-wHu"/>
                                             <outlet property="profileImageView" destination="RWb-NR-Bsm" id="5Ar-FX-gul"/>
                                             <outlet property="timestampLabel" destination="oNn-oS-viE" id="XHl-8w-snP"/>
-                                            <outlet property="tweetLabel" destination="q3S-vf-gHW" id="psx-R1-Ede"/>
+                                            <outlet property="tweetLabel" destination="q3S-vf-gHW" id="0mx-Gb-z6H"/>
                                             <segue destination="ylq-KU-sXp" kind="push" identifier="tweetDetails" id="4Ty-8Q-AjU"/>
                                         </connections>
                                     </tableViewCell>
@@ -929,7 +929,7 @@
         <image name="retweet-action" width="75" height="72"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZkS-jS-TIe"/>
         <segue reference="cWt-Z5-HUN"/>
+        <segue reference="qme-Xp-weY"/>
     </inferredMetricsTieBreakers>
 </document>

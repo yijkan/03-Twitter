@@ -7,13 +7,20 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 import AFNetworking
 
 class TweetCell: UITableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
+//    @IBOutlet weak var tweetLabel: TTTAttributedLabel! // !!!
     @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
+    
+    // !!!
+//    func viewDidLoad() {
+//        tweetLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+//    }
     
     var tweet: Tweet! {
         didSet {
@@ -27,7 +34,8 @@ class TweetCell: UITableViewCell {
                 })
             }
             authorLabel.attributedText = user?.attributedNameAndHandle
-            tweetLabel.text = tweet.text
+                    tweetLabel.text = tweet.text // !!!
+//            tweetLabel.setText(tweet.attributedText)
             timestampLabel.text = tweet.relativeTimestamp
         }
     }

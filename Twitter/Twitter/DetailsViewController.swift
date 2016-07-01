@@ -45,11 +45,11 @@ class DetailsViewController: UIViewController {
         if let handle = user?.handle {
             handleLabel.text = "@" + handle
         }
-        tweetLabel.text = tweet.text
+        tweetLabel.text = tweet.text // !!!
+//        tweetLabel.attributedText = tweet.attributedText
         timestampLabel.text = tweet.absoluteTimestamp
     }
     
-    // ??? WTF the image won't get set...
     override func viewWillAppear(animated: Bool) {
         if tweet.liked {
             favoriteButton.setImage(favoritedTrueImage, forState: .Normal)
