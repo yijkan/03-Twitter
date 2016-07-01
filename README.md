@@ -1,8 +1,8 @@
-# Project 4 - *MyTweet*
+# Project 4 - MyTweet
 
 **MyTweet** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **16.5** hours spent in total
+Time spent: **17** hours spent in total
 
 ## User Stories
 
@@ -28,7 +28,7 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [x] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
-- [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
+- [x] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [x] When composing, you should have a countdown in the upper right for the tweet limit.
 - [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [x] User can reply to any tweet, and replies should be prefixed with the username and the reply_id should be set when posting the tweet
@@ -66,7 +66,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 ## License
 
-    Copyright [2016] [Yijin Kang]
+    Copyright 2016 Yijin Kang
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

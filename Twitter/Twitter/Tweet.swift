@@ -35,7 +35,6 @@ class Tweet: NSObject {
             return attributed
         }
     }
-    
     var createdAt:NSDate?
     var relativeTimestamp:String? {
         get {

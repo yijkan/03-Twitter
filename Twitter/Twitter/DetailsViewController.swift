@@ -22,6 +22,9 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
     
+    @IBOutlet weak var retweetsNum: UILabel!
+    @IBOutlet weak var likesNum: UILabel!
+    
     let retweetedFalseImage = UIImage(named: "retweet-action")
     let favoritedFalseImage = UIImage(named: "like-action")
     let repliedFalseImage = UIImage(named: "reply-action_0")
@@ -51,18 +54,25 @@ class DetailsViewController: UIViewController {
 //        tweetLabel.text = tweet.text
 //        tweetLabel.attributedText = tweet.attributedText
         timestampLabel.text = tweet.absoluteTimestamp
+        
+        retweetsNum.text = "\(tweet.retweets)"
+        likesNum.text = "\(tweet.likes)"
     }
     
     override func viewWillAppear(animated: Bool) {
         if tweet.liked {
             favoriteButton.setImage(favoritedTrueImage, forState: .Normal)
+            likesNum.textColor = redColor
         } else {
             favoriteButton.setImage(favoritedFalseImage, forState: .Normal)
+            likesNum.textColor = grayColor
         }
         if tweet.retweeted {
             retweetButton.setImage(retweetedTrueImage, forState: .Normal)
+            retweetsNum.textColor = greenColor
         } else {
             retweetButton.setImage(retweetedFalseImage, forState: .Normal)
+            retweetsNum.textColor = grayColor
         }
         replyButton.setImage(repliedFalseImage, forState: .Normal)
     }
@@ -74,14 +84,20 @@ class DetailsViewController: UIViewController {
     @IBAction func onRetweet(sender: UIButton) {
         if tweet.retweeted {
             TwitterClient.sharedInstance.unretweet(tweet.id, success: {
-                self.tweet.retweeted = false
-                self.retweetButton.setImage(self.retweetedFalseImage, forState: .Normal)
+                    self.tweet.retweets -= 1
+                    self.tweet.retweeted = false
+                    self.retweetsNum.text = "\(Int(self.retweetsNum.text!)! - 1)"
+                    self.retweetsNum.textColor = grayColor
+                    self.retweetButton.setImage(self.retweetedFalseImage, forState: .Normal)
                 }, failure: failureClosure
             )
         } else {
             TwitterClient.sharedInstance.retweet(tweet.id, success: {
-                self.tweet.retweeted = true
-                self.retweetButton.setImage(self.retweetedTrueImage, forState: .Normal)
+                    self.tweet.retweets += 1
+                    self.tweet.retweeted = true
+                    self.retweetsNum.text = "\(Int(self.retweetsNum.text!)! + 1)"
+                    self.retweetsNum.textColor = greenColor
+                    self.retweetButton.setImage(self.retweetedTrueImage, forState: .Normal)
                 }, failure: failureClosure
             )
         }
@@ -97,13 +113,19 @@ class DetailsViewController: UIViewController {
         }
         if tweet.liked {
             TwitterClient.sharedInstance.unfavorite(tweetID, success: {
-                self.tweet.liked = false
-                self.favoriteButton.setImage(self.favoritedFalseImage, forState: .Normal)
+                    self.tweet.likes -= 1
+                    self.likesNum.text = "\(Int(self.likesNum.text!)! - 1)"
+                    self.tweet.liked = false
+                    self.likesNum.textColor = grayColor
+                    self.favoriteButton.setImage(self.favoritedFalseImage, forState: .Normal)
                 }, failure: failureClosure
             )
         } else {
             TwitterClient.sharedInstance.favorite(tweetID, success: {
+                    self.tweet.likes += 1
+                    self.likesNum.text = "\(Int(self.likesNum.text!)! + 1)"
                     self.tweet.liked = true
+                    self.likesNum.textColor = redColor
                     self.favoriteButton.setImage(self.favoritedTrueImage, forState: .Normal)
                 }, failure: failureClosure
             )
