@@ -32,6 +32,7 @@ class ProfileViewController: FeedViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("profile") as! ProfileCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.user = user
             return cell
         } else {

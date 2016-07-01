@@ -2,7 +2,7 @@
 
 **MyTweet** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **16** hours spent in total
+Time spent: **16.5** hours spent in total
 
 ## User Stories
 
@@ -32,7 +32,7 @@ The following **optional** features are implemented:
 - [x] When composing, you should have a countdown in the upper right for the tweet limit.
 - [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [x] User can reply to any tweet, and replies should be prefixed with the username and the reply_id should be set when posting the tweet
-- [ ] Links in tweets are clickable
+- [x] Links in tweets are clickable
 - [ ] User can switch between timeline, mentions, or profile view through a tab bar
 - [ ] Pulling down the profile page should blur and resize the header image.
 

@@ -14,7 +14,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
-    @IBOutlet weak var tweetLabel: UILabel!
+//    @IBOutlet weak var tweetLabel: UILabel! 
+    @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var timestampLabel: UILabel!
 
     @IBOutlet weak var retweetButton: UIButton!
@@ -45,7 +46,9 @@ class DetailsViewController: UIViewController {
         if let handle = user?.handle {
             handleLabel.text = "@" + handle
         }
-        tweetLabel.text = tweet.text // !!!
+        // !!!
+        tweetTextView.text = tweet.text
+//        tweetLabel.text = tweet.text
 //        tweetLabel.attributedText = tweet.attributedText
         timestampLabel.text = tweet.absoluteTimestamp
     }
