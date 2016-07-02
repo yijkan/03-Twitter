@@ -44,6 +44,7 @@ class User: NSObject {
     var numTweets: Int?
     var numFollowing: Int?
     var numFollowers: Int?
+    var following: Bool?
     
     init(dictionary: NSDictionary) {
         dict = dictionary
@@ -58,6 +59,7 @@ class User: NSObject {
         numTweets = dictionary["statuses_count"] as? Int
         numFollowing = dictionary["friends_count"] as? Int
         numFollowers = dictionary["followers_count"] as? Int
+        following = dictionary["following"] as? Bool
     }
     
     func reload(success: ((User) -> ()), failure: ((NSError) -> ())) {
