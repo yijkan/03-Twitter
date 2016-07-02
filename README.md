@@ -69,13 +69,15 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Don't mix up GET and POST haha. And using TTTAttributedLabel which wasn't documented too well for Swift. 
 
 ## Credits
 
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
+- [BDBOAuth1Manager](https://github.com/bdbergeron/BDBOAuth1Manager)
 - [TTTAttributedLabel](https://github.com/TTTAttributedLabel/TTTAttributedLabel)
 
 ## License
