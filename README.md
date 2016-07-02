@@ -2,7 +2,7 @@
 
 **MyTweet** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **22** hours spent in total
+Time spent: **23** hours spent in total
 
 ## User Stories
 
@@ -49,7 +49,21 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Sign in and scroll through home feed and your own profile
+
+<img src='http://i.imgur.com/iZSqZwJ.gif' title='signin' width='' alt='Sign in' />
+
+Compose a tweet
+
+<img src='http://i.imgur.com/yOtdZAA.gif' title='compose' width='' alt='Compose a new tweet' />
+
+View someone else's profile, follow/unfollow them
+
+<img src='http://i.imgur.com/mGQNiw0.gif' title='compose' width='' alt='Compose a new tweet' />
+
+AutoLayout!
+
+<img src='http://i.imgur.com/grakfqC.gif' title='compose' width='' alt='Compose a new tweet' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
