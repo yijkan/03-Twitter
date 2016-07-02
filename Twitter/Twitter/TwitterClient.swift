@@ -106,7 +106,8 @@ class TwitterClient: BDBOAuth1SessionManager {
             completion()
         }
         print("will follow " + screenName)
-        TwitterClient.sharedInstance.GET(TwitterClient.followPath, parameters: ["screen_name":screenName], progress: nil, success: fullSuccess, failure: fullFailure)
+        print(TwitterClient.followPath)
+        TwitterClient.sharedInstance.POST(TwitterClient.followPath, parameters: ["screen_name":screenName], progress: nil, success: fullSuccess, failure: fullFailure)
     }
     
     func unfollow(screenName: String!, success: (() -> ()), failure: ((NSError) -> ()), completion: (() -> ())) {
@@ -119,7 +120,8 @@ class TwitterClient: BDBOAuth1SessionManager {
             completion()
         }
         print("will unfollow " + screenName)
-        TwitterClient.sharedInstance.GET(TwitterClient.unfollowPath, parameters: ["screen_name":screenName], progress: nil, success: fullSuccess, failure: fullFailure)
+        print(TwitterClient.unfollowPath)
+        TwitterClient.sharedInstance.POST(TwitterClient.unfollowPath, parameters: ["screen_name":screenName], progress: nil, success: fullSuccess, failure: fullFailure)
     }
     
     func timeline(loadCount:Int, screenName: String?, success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
