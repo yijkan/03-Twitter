@@ -52,6 +52,8 @@ class DetailsViewController: UIViewController {
         
         nameLabel.attributedText = user!.largeAttributedNameAndHandle
 
+        tweetLabel.linkAttributes = [kCTForegroundColorAttributeName : tintColor]
+        tweetLabel.activeLinkAttributes = [kCTForegroundColorAttributeName : linkActiveColor]
         tweetLabel.font = textFont(16)
         tweetLabel.delegate = self
         tweetLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue

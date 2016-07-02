@@ -24,6 +24,8 @@ func hex2UIColor(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
 let grayColor = hex2UIColor(0xaab8c3)
 let greenColor = hex2UIColor(0x00d084)
 let redColor = hex2UIColor(0xeb144c)
+let tintColor = hex2UIColor(0x1da1f2)
+let linkActiveColor = UIColor.blackColor()
 
 func boldFont(size: CGFloat) -> UIFont {
     return UIFont(name: "GillSans-SemiBold", size: size)!

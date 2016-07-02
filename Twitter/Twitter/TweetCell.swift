@@ -35,6 +35,8 @@ class TweetCell: UITableViewCell {
             timestampLabel.font = labelFont(12)
             
             tweetLabel.delegate = self
+            tweetLabel.linkAttributes = [kCTForegroundColorAttributeName : tintColor]
+            tweetLabel.activeLinkAttributes = [kCTForegroundColorAttributeName : linkActiveColor]
             tweetLabel.font = textFont(14)
             tweetLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
             tweetLabel.setText(tweet.text)

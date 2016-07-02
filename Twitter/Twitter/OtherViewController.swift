@@ -54,7 +54,7 @@ class OtherViewController: ProfileViewController {
     }
     
     func onUnfollow(sender: AnyObject) {
-        TwitterClient.sharedInstance.follow(user.handle!, success: { () in
+        TwitterClient.sharedInstance.unfollow(user.handle!, success: { () in
                 self.navigationItem.rightBarButtonItem = self.followBarButton
                 self.user.following = false
                 print("unfollowed")
