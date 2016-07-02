@@ -87,6 +87,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         let tweet = tweetTextView.text
         if tweet.characters.count > 140 {
             // TODO tweet is too long?
+            // Also question marks don't seem to work
             print("tweet is too long!")
         } else {
             if let replyTo = replyTo {
@@ -100,7 +101,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
                     }, failure: failureClosure
                 )
             }
-        }
+       }
     }
     
 }

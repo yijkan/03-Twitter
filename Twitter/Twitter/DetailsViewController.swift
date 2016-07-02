@@ -62,8 +62,16 @@ class DetailsViewController: UIViewController {
         
         retweetsNum.font = labelFont(14)
         retweetsNum.text = "\(tweet.retweets)"
+        
+        var numLikes:Int!
+        if let originalDict = tweet.originalDict {
+            let original = Tweet(dictionary: originalDict)
+            numLikes = original.likes
+        } else {
+            numLikes = tweet.likes
+        }
         likesNum.font = labelFont(14)
-        likesNum.text = "\(tweet.likes)"
+        likesNum.text = "\(numLikes)"
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -93,7 +101,8 @@ class DetailsViewController: UIViewController {
             TwitterClient.sharedInstance.unretweet(tweet.id, success: {
                     self.tweet.retweets -= 1
                     self.tweet.retweeted = false
-                    self.retweetsNum.text = "\(Int(self.retweetsNum.text!)! - 1)"
+                    let newRTNum = Int(self.retweetsNum.text!)! - 1
+                    self.retweetsNum.text = "\(newRTNum >= 0 ? newRTNum : 0)"
                     self.retweetsNum.textColor = grayColor
                     self.retweetButton.setImage(self.retweetedFalseImage, forState: .Normal)
                 }, failure: failureClosure
@@ -121,7 +130,8 @@ class DetailsViewController: UIViewController {
         if tweet.liked {
             TwitterClient.sharedInstance.unfavorite(tweetID, success: {
                     self.tweet.likes -= 1
-                    self.likesNum.text = "\(Int(self.likesNum.text!)! - 1)"
+                    let newLikesNum = Int(self.likesNum.text!)! - 1
+                    self.likesNum.text = "\(newLikesNum >= 0 ? newLikesNum : 0)"
                     self.tweet.liked = false
                     self.likesNum.textColor = grayColor
                     self.favoriteButton.setImage(self.favoritedFalseImage, forState: .Normal)

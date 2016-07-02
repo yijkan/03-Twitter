@@ -16,25 +16,7 @@ class Tweet: NSObject {
     var id:String?
     var user:User?
     var text:String?
-    var urls:[Url]?
-    // !!!
-    var attributedText:NSMutableAttributedString? {
-        get {
-            if text == nil {
-                return nil
-            }
-            let attributed = NSMutableAttributedString(string: text!)
-            if urls == nil {
-                return attributed
-            }
-            for url in urls! {
-                if url.expandedURL != nil && url.indices != nil {
-                    attributed.addAttribute(NSLinkAttributeName, value: url.expandedURL!, range: NSMakeRange(url.indices!.0, url.indices!.1 - url.indices!.0)) // !!! this doesn't actually make it clickable
-                }
-            }
-            return attributed
-        }
-    }
+
     var createdAt:NSDate?
     var relativeTimestamp:String? {
         get {
@@ -52,6 +34,7 @@ class Tweet: NSObject {
             }
         }
     }
+    
     var retweets:Int = 0
     var retweeted:Bool = false
     var likes:Int = 0
@@ -62,7 +45,6 @@ class Tweet: NSObject {
     init(tweetText:String) {
         user = User.currentUser
         text = tweetText
-        urls = []
         let date = NSDate()
         let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day, .Hour, .Minute, .Second], fromDate: date)
         createdAt = NSCalendar.currentCalendar().dateFromComponents(components)
@@ -74,11 +56,6 @@ class Tweet: NSObject {
             user = User(dictionary: userData)
         }
         text = dictionary["text"] as? String
-        if let entities = dictionary["entities"] as? NSDictionary {
-            if let urls = entities["urls"] as? [NSDictionary] {
-                self.urls = Url.dicts2URLs(urls)
-            }
-        }
         let createdAtString = dictionary["created_at"] as? String
         let formatter = NSDateFormatter()
         formatter.dateFormat = Tweet.sourceDateFormat

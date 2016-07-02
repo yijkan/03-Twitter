@@ -14,8 +14,6 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var tweetLabel: TTTAttributedLabel!
-    // !!!
-//    @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     
     var delegate: WebViewDelegate!
