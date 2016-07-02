@@ -906,7 +906,7 @@
         <scene sceneID="mjB-dK-LKB">
             <objects>
                 <navigationController storyboardIdentifier="FeedNavCon" automaticallyAdjustsScrollViewInsets="NO" id="uWB-Vn-kuj" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="oeS-b5-2ha"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home" id="oeS-b5-2ha"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TaH-27-U81">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -943,7 +943,7 @@
         <scene sceneID="Xvn-3I-syy">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AKh-6Q-uCh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="BAs-se-hld"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="BAs-se-hld"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="a4D-yt-hu8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -960,7 +960,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="home" width="28" height="25"/>
         <image name="like-action" width="54" height="72"/>
+        <image name="profile" width="28" height="25"/>
         <image name="reply-action_0" width="65" height="72"/>
         <image name="retweet-action" width="75" height="72"/>
     </resources>
