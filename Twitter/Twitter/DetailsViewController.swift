@@ -51,7 +51,6 @@ class DetailsViewController: UIViewController {
         }
         
         nameLabel.attributedText = user!.largeAttributedNameAndHandle
-        print("\(user!.largeAttributedNameAndHandle?.string)")
 
         tweetLabel.font = textFont(16)
         tweetLabel.delegate = self

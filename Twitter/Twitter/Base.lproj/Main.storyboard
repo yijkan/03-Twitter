@@ -508,7 +508,9 @@
                             <constraint firstItem="vwE-xC-stH" firstAttribute="top" secondItem="U4u-Zy-a4Y" secondAttribute="bottom" id="ZwV-YY-fbb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="GLe-iN-5Du"/>
+                    <navigationItem key="navigationItem" id="GLe-iN-5Du">
+                        <barButtonItem key="rightBarButtonItem" id="vNa-Kc-onA"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tweetsTableView" destination="U4u-Zy-a4Y" id="w1d-M2-kOz"/>
                         <segue destination="E8k-Xx-h37" kind="push" identifier="web" id="l7j-6N-04P"/>

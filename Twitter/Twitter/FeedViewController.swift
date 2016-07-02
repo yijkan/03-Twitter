@@ -162,7 +162,6 @@ extension FeedViewController : TweetDelegate {
 
 extension FeedViewController: WebViewDelegate {
     func openLink(url: NSURL) {
-        print("opening \(url)")
         performSegueWithIdentifier("web", sender: url)
     }
 }

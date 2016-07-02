@@ -21,6 +21,8 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     static let verifyPath = "1.1/account/verify_credentials.json"
     static let showUserPath = "1.1/users/show.json"
+    static let followPath = "1.1/friendships/create.json"
+    static let unfollowPath = "1.1/friendships/destroy.json"
     static let homeTimelinePath = "1.1/statuses/home_timeline.json"
     static let userTimelinePath = "1.1/statuses/user_timeline.json"
     static let updatePath = "1.1/statuses/update.json"
@@ -94,6 +96,32 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func follow(screenName: String!, success: (() -> ()), failure: ((NSError) -> ()), completion: (() -> ())) {
+        let fullSuccess = { (task:NSURLSessionDataTask, response:AnyObject?) in
+            success()
+            completion()
+        }
+        let fullFailure = { (task:NSURLSessionDataTask?, error:NSError) in
+            failure(error)
+            completion()
+        }
+        print("will follow " + screenName)
+        TwitterClient.sharedInstance.GET(TwitterClient.followPath, parameters: ["screen_name":screenName], progress: nil, success: fullSuccess, failure: fullFailure)
+    }
+    
+    func unfollow(screenName: String!, success: (() -> ()), failure: ((NSError) -> ()), completion: (() -> ())) {
+        let fullSuccess = { (task:NSURLSessionDataTask, response:AnyObject?) in
+            success()
+            completion()
+        }
+        let fullFailure = { (task:NSURLSessionDataTask?, error:NSError) in
+            failure(error)
+            completion()
+        }
+        print("will unfollow " + screenName)
+        TwitterClient.sharedInstance.GET(TwitterClient.unfollowPath, parameters: ["screen_name":screenName], progress: nil, success: fullSuccess, failure: fullFailure)
+    }
+    
     func timeline(loadCount:Int, screenName: String?, success: ([Tweet]) -> (), failure:(NSError) -> (), completion: () -> ()) {
         let fullSuccess = { (task:NSURLSessionDataTask, response:AnyObject?) in
             let dictionaries = response as! [NSDictionary]
@@ -124,7 +152,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func reply(replyTo: Tweet, tweetText:String!, success: () -> (), failure:(NSError) -> ()) {
         TwitterClient.sharedInstance.POST(TwitterClient.updatePath, parameters: ["status":tweetText, "in_reply_to_status_id":replyTo.id], progress: nil, success: { (task:NSURLSessionDataTask, response:AnyObject?) in
-            success()
+                success()
             }, failure: { (task:NSURLSessionDataTask?, error:NSError) in
                 failure(error)
             }

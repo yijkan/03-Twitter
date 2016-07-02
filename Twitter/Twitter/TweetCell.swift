@@ -31,7 +31,6 @@ class TweetCell: UITableViewCell {
                         failureClosure(error)
                 })
             }
-//            authorLabel.font = labelFont(16)
             authorLabel.attributedText = user?.attributedNameAndHandle
             
             timestampLabel.text = tweet.relativeTimestamp
